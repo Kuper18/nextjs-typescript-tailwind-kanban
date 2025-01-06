@@ -21,6 +21,7 @@ body {
     --primary-foreground: 0, 0%, 100%, 1;
 
     --secondary: 219, 63%, 95%, 1;
+    /* --secondary: 220, 69%, 97%, 1; */
     --secondary-foreground: 216, 15%, 57%, 1;
 
     --muted: 242, 48%, 58%, 0.25;
@@ -50,6 +51,15 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+
+    --sidebar-background: 0, 0%, 100%, 1;
+    --sidebar-foreground: 237, 100%, 4%, 1;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0, 0%, 100%;
+    --sidebar-accent: 242, 48%, 58%, 1;
+    --sidebar-accent-foreground: 0, 0%, 100%, 1;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
     --background: 235, 12%, 19%, 1;
@@ -93,6 +103,15 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
+    --sidebar-background: 235, 12%, 19%, 1;
+    --sidebar-foreground: 0, 0%, 100%, 1;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0, 0% 100%;
+    --sidebar-accent: 242, 48%, 58%, 1;
+    --sidebar-accent-foreground: 0, 0%, 100%, 1;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -102,5 +121,9 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .side-bar {
+    height: calc(100vh - 96px);
   }
 }

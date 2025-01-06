@@ -1,11 +1,8 @@
 import React from 'react';
+import MainLayout from '@/components/templates/MainLayout';
 
 const Home = () => {
-  return (
-    <main className="flex h-screen items-center justify-center">
-      <h1 className="text-4xl">Hello World</h1>
-    </main>
-  );
+  return <MainLayout />;
 };
 
 export default Home;
