@@ -31,13 +31,13 @@ const items = [
 
 const AsideMenu = () => {
   return (
-    <Sidebar className="pt-24">
-      <SidebarHeader className="mb-[19px] ml-8 mt-[15px]">
+    <Sidebar className="pt-16 sm:pt-[81px] lg:pt-24">
+      <SidebarHeader className="mb-[19px] ml-6 mt-[15px] lg:ml-8">
         ALL BOARDS (3)
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup className="w-[276px] p-0">
+        <SidebarGroup className="w-[240px] p-0 lg:w-[276px]">
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item, i) => (
@@ -70,7 +70,7 @@ const AsideMenu = () => {
       <SidebarFooter className="p-0 pb-8">
         <ToggleThemeButton />
 
-        <SidebarTrigger className="ml h-12 w-[276px] rounded-l-none pr-[130px] text-[15px] font-bold leading-5 text-secondary-foreground hover:bg-accent-secondary hover:text-accent" />
+        <SidebarTrigger className="ml h-12 w-[240px] rounded-l-none pr-[130px] text-[15px] font-bold leading-5 text-secondary-foreground hover:bg-accent-secondary hover:text-accent lg:w-[276px]" />
       </SidebarFooter>
     </Sidebar>
   );
