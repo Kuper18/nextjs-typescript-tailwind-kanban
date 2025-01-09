@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 export const setCookies = ({ access_token, refresh_token }: ITokenResponse): void => {
   const COOKIE_CONFIG = {
-    expires: 7,
+    expires: 30,
     path: '',
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',

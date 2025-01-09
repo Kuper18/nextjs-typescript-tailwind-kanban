@@ -1,6 +1,5 @@
 import axiosInstance from '@/axios-settings';
 import { ILoginBody, ITokenResponse } from './types';
-import Cookies from 'js-cookie';
 import { setCookies } from '@/utils';
 
 class AuthService {
