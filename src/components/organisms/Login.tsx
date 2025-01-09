@@ -23,6 +23,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/atoms/card';
+import authApi from '@/services/auth';
 
 type FormData = z.infer<typeof loginSchema>;
 
@@ -39,7 +40,9 @@ const Login = () => {
     formState: { errors },
   } = form;
 
-  const onSubmit = async () => {};
+  const onSubmit = async (data: FormData) => {
+    await authApi.login(data);
+  };
 
   return (
     <Card>
