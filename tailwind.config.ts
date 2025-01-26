@@ -69,6 +69,7 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        shadow: 'hsl(var(--shadow))',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -83,6 +84,9 @@ export default {
         'body-l': ['13px', { lineHeight: '23px', fontWeight: '500' }],
         'body-m': ['12px', { lineHeight: '15px', fontWeight: '700' }],
       },
+      boxShadow: {
+        custom: '0px 4px 6px 0px hsla(var(--shadow))'
+      }
     },
   },
   // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports

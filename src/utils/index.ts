@@ -1,7 +1,10 @@
 import { ITokenResponse } from '@/services/auth/types';
 import Cookies from 'js-cookie';
 
-export const setCookies = ({ access_token, refresh_token }: ITokenResponse): void => {
+export const setCookies = ({
+  access_token,
+  refresh_token,
+}: ITokenResponse): void => {
   const COOKIE_CONFIG = {
     expires: 30,
     path: '',
@@ -16,4 +19,4 @@ export const setCookies = ({ access_token, refresh_token }: ITokenResponse): voi
 export const removeCookies = (): void => {
   Cookies.remove('access_token', { path: '' });
   Cookies.remove('refresh_token', { path: '' });
-}
+};
