@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <Card>
+    <Card className='w-[500px]'>
       <CardHeader>
         <CardTitle>Login</CardTitle>
         <CardDescription>
