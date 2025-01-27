@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
+import { removeCookies } from './utils';
 
 export async function middleware(req: NextRequest) {
   const accessToken = req.cookies.get('access_token');
@@ -13,7 +14,9 @@ export async function middleware(req: NextRequest) {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
     await jwtVerify(accessToken.value, secret);
   } catch (error) {
+    removeCookies();
     console.error('Invalid token:', error);
+
     return NextResponse.redirect(new URL('/login', req.url));
   }
 
@@ -21,5 +24,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/',],
+  matcher: ['/'],
 };

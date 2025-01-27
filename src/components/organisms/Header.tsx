@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'fixed grid h-16 w-full items-center bg-background transition-all sm:h-[81px] lg:h-24',
+        'fixed z-50 grid h-16 w-full items-center bg-background transition-all sm:h-[81px] lg:h-24',
         open
           ? 'grid-cols-[40px_1fr] sm:grid-cols-[260px_1fr] lg:grid-cols-[300px_1fr]'
           : 'grid-cols-[209px_1fr]',

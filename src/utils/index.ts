@@ -20,3 +20,18 @@ export const removeCookies = (): void => {
   Cookies.remove('access_token', { path: '' });
   Cookies.remove('refresh_token', { path: '' });
 };
+
+export const generateRandomColor = (): string => {
+  const red = getRandomIntInclusive(0, 255);
+  const green = getRandomIntInclusive(0, 255);
+  const blue = getRandomIntInclusive(0, 255);
+
+  return `rgb(${red}, ${green}, ${blue})`
+};
+
+function getRandomIntInclusive(min: number, max: number) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
+
+  return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
+}
