@@ -12,6 +12,7 @@ import {
 import CardTask from '../molecules/CardTask';
 import Subtask from '../molecules/Subtask';
 import SelectInput from '../molecules/SelectInput';
+import DropdownMenu from '../molecules/DropdownMenu';
 
 const ViewTaskDialog = () => {
   return (
@@ -22,11 +23,12 @@ const ViewTaskDialog = () => {
         </DialogTrigger>
 
         <DialogContent hideCloseIcon className="gap-6">
-          <DialogHeader>
-            <DialogTitle className="font-bold leading-6">
+          <DialogHeader className="flex flex-row items-center justify-between space-x-6">
+            <DialogTitle className="max-w-[387px] font-bold leading-6">
               Research pricing points of various competitors and trial different
               business models
             </DialogTitle>
+            <DropdownMenu options={['Edit Task', 'Delete Task']} />
           </DialogHeader>
 
           <DialogDescription className="text-[13px] font-medium text-input-foreground">
