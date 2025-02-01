@@ -7,7 +7,7 @@ export const setCookies = ({
   refresh_token,
 }: ITokenResponse): void => {
   const COOKIE_CONFIG = {
-    expires: 30,
+    expires: 90,
     path: '/',
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',

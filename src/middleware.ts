@@ -4,14 +4,14 @@ import { jwtVerify } from 'jose';
 import { Token } from './enums/token';
 
 export async function middleware(req: NextRequest) {
-  const accessToken = req.cookies.get(Token.ACCESS);
+  const refreshToken = req.cookies.get(Token.REFRESH);
   const pathName = req.nextUrl.pathname;
   const isAuthRoute = pathName === '/login' || pathName === '/signup';
 
-  if (accessToken) {
+  if (refreshToken) {
     try {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-      await jwtVerify(accessToken.value, secret);
+      await jwtVerify(refreshToken.value, secret);
 
       if (isAuthRoute) {
         return NextResponse.redirect(new URL('/', req.url));
@@ -33,7 +33,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  if (!accessToken && !isAuthRoute) {
+  if (!refreshToken && !isAuthRoute) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
 
