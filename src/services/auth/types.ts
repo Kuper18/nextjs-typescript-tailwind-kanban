@@ -1,9 +1,11 @@
+import { Token } from "@/enums/token";
+
 export interface ILoginBody {
   email: string;
   password: string;
 }
 
 export interface ITokenResponse {
-  access_token: string;
-  refresh_token: string;
+  [Token.ACCESS]: string;
+  [Token.REFRESH]: string;
 }

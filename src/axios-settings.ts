@@ -2,6 +2,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 import { ITokenResponse } from './services/auth/types';
 import { removeCookies, setCookies } from './utils';
+import { Token } from './enums/token';
 
 const API_CONFIG = {
   baseURL: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000',
@@ -11,7 +12,7 @@ const axiosInstance = axios.create(API_CONFIG);
 
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const accessToken = Cookies.get('access_token');
+    const accessToken = Cookies.get(Token.ACCESS);
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -33,7 +34,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = Cookies.get('refresh_token');
+        const refreshToken = Cookies.get(Token.REFRESH);
 
         if (!refreshToken) {
           throw new Error('No refresh token available');
