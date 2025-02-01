@@ -11,6 +11,7 @@ import {
 } from '@/components/atoms/dialog';
 import CardTask from '../molecules/CardTask';
 import Subtask from '../molecules/Subtask';
+import SelectInput from '../molecules/SelectInput';
 
 const ViewTaskDialog = () => {
   return (
@@ -43,6 +44,13 @@ const ViewTaskDialog = () => {
               <Subtask isCompleted={true} title="" />
               <Subtask isCompleted={false} title="" />
             </ul>
+          </div>
+
+          <div>
+            <p className="mb-2 text-xs font-bold text-input-foreground">
+              Current status
+            </p>
+            <SelectInput options={[{ id: 1, name: 'Option' }]} />
           </div>
         </DialogContent>
       </Dialog>

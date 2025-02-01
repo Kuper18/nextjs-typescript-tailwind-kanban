@@ -15,9 +15,10 @@ body {
     --card-foreground: 237, 100%, 4%, 1;
 
     --popover: 0, 0%, 100%, 1;
-    --popover-foreground: 237, 100%, 4%, 1;
+    --popover-foreground: 216, 15%, 57%;
 
     --primary: 220, 69%, 97%, 1;
+    --primary-hover: 220, 69%, 97%, 1;
     --primary-foreground: 0, 0%, 100%, 1;
 
     --secondary: 219, 63%, 95%, 1;
@@ -70,10 +71,11 @@ body {
     --card: 235, 12%, 19%, 1;
     --card-foreground: 0, 0%, 100%, 1;
 
-    --popover: 235, 12%, 19%, 1;
-    --popover-foreground: 0, 0%, 100%, 1;
+    --popover: 235, 16%, 15%, 1;
+    --popover-foreground: 216, 15%, 57%;
 
     --primary: 235, 16%, 15%, 1;
+    --primary-hover: 242, 48%, 58%, 0.25;
     --primary-foreground: 0, 0%, 100%, 1;
 
     --secondary: 235, 12%, 19%, 0.25;
