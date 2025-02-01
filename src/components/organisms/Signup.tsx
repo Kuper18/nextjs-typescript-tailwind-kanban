@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/atoms/card';
@@ -15,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import FormInput from '../molecules/FormInput';
 import PasswordInput from '../molecules/PasswordInput';
+import Link from 'next/link';
 
 type FormData = z.infer<typeof signupSchema>;
 
@@ -64,6 +66,13 @@ const Signup = () => {
           </form>
         </Form>
       </CardContent>
+
+      <CardFooter className="space-x-2 text-sm text-muted-foreground">
+        <p>Already have an account?</p>
+        <Link className="underline" href="/login">
+          Login
+        </Link>
+      </CardFooter>
     </Card>
   );
 };

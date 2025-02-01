@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/atoms/card';
@@ -16,10 +17,13 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import FormInput from '../molecules/FormInput';
 import PasswordInput from '../molecules/PasswordInput';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 type FormData = z.infer<typeof loginSchema>;
 
 const Login = () => {
+  const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -30,6 +34,7 @@ const Login = () => {
 
   const onSubmit = async (data: FormData) => {
     await authApi.login(data);
+    router.push('/');
   };
 
   return (
@@ -54,6 +59,13 @@ const Login = () => {
           </form>
         </Form>
       </CardContent>
+
+      <CardFooter className="space-x-2 text-sm text-muted-foreground">
+        <p>Do not have an account?</p>
+        <Link className="underline" href="/signup">
+          Signup
+        </Link>
+      </CardFooter>
     </Card>
   );
 };
