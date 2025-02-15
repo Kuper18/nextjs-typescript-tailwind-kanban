@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { EllipsisVertical, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { EllipsisVertical } from 'lucide-react';
 import Logo from '../atoms/icons/Logo';
-import { Button } from '../atoms/button';
 import { useSidebar } from '../atoms/sidebar';
+import CreateTaskDialog from './CreateTaskDialog';
 import MobileMenu from './MobileMenu';
 
 const Header = () => {
@@ -40,10 +40,7 @@ const Header = () => {
         <MobileMenu />
 
         <div className="flex items-center space-x-[16px] sm:space-x-6">
-          <Button size="lg" className="w-12 sm:w-[164px]">
-            <Plus className="h-3 w-3" />
-            <span className="hidden sm:inline">Add new Task</span>
-          </Button>
+          <CreateTaskDialog />
           <EllipsisVertical className="cursor-pointer text-secondary-foreground" />
         </div>
       </div>

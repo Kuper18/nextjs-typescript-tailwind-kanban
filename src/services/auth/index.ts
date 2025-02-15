@@ -1,11 +1,14 @@
 import axiosInstance from '@/axios-settings';
-import { ILoginBody, ITokenResponse } from './types';
 import { setCookies } from '@/utils';
+import { ILoginBody, ITokenResponse } from './types';
 
 class AuthService {
   async login(body: ILoginBody) {
     try {
-      const { data } = await axiosInstance.post<ITokenResponse>('/auth/login', body);
+      const { data } = await axiosInstance.post<ITokenResponse>(
+        '/auth/login',
+        body,
+      );
 
       setCookies(data);
 

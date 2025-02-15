@@ -1,4 +1,6 @@
 import React from 'react';
+import { Textarea } from '../atoms/textarea';
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import {
   FormControl,
   FormField,
@@ -6,21 +8,19 @@ import {
   FormLabel,
   FormMessage,
 } from '../atoms/form';
-import { Input } from '../atoms/input';
 import { cn } from '@/lib/utils';
-import { UseFormReturn, Path, FieldValues } from 'react-hook-form';
 
 type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
   name: Path<T>;
-  label?: string;
+  label: string;
   placeHolder?: string;
 };
 
-const FormInput = <T extends FieldValues>({
+const TextareaInput = <T extends FieldValues>({
   form,
-  name,
   label,
+  name,
   placeHolder,
 }: Props<T>) => {
   const {
@@ -33,17 +33,16 @@ const FormInput = <T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <FormItem>
-          {label && <FormLabel>{label}</FormLabel>}
+          <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input
-              type="text"
-              placeholder={placeHolder ?? label}
+            <Textarea
               {...field}
               className={cn(
                 errors[name]
                   ? 'border-destructive focus:border-destructive'
                   : undefined,
               )}
+              placeholder={placeHolder ?? label}
             />
           </FormControl>
           <FormMessage />
@@ -53,4 +52,4 @@ const FormInput = <T extends FieldValues>({
   );
 };
 
-export default FormInput;
+export default TextareaInput;

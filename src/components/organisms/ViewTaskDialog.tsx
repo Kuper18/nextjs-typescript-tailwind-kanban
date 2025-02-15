@@ -4,14 +4,13 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/atoms/dialog';
 import CardTask from '../molecules/CardTask';
 import Subtask from '../molecules/Subtask';
-import SelectInput from '../molecules/SelectInput';
+import SelectInput from '../molecules/SelectComponent';
 import DropdownMenu from '../molecules/DropdownMenu';
 
 const ViewTaskDialog = () => {
@@ -43,7 +42,7 @@ const ViewTaskDialog = () => {
             </DialogDescription>
 
             <ul className="space-y-2">
-              <Subtask isCompleted={true} title="" />
+              <Subtask isCompleted title="" />
               <Subtask isCompleted={false} title="" />
             </ul>
           </div>

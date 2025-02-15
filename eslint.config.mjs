@@ -19,7 +19,7 @@ const eslintConfig = [
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:@typescript-eslint/recommended',
-    'airbnb-typescript',
+    // 'airbnb-typescript',
   ),
   {
     rules: {
