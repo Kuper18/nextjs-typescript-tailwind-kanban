@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
 import { MoonStar, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import React from 'react';
+
 import { Switch } from '../atoms/switch';
 
 const ToggleThemeButton = () => {

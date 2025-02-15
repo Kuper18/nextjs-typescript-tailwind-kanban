@@ -1,10 +1,12 @@
+import { EllipsisVertical } from 'lucide-react';
+import React from 'react';
+
 import {
   DropdownMenu as DropdownMenuAtom,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/atoms/dropdown-menu';
-import { EllipsisVertical } from 'lucide-react';
 
 type Props = {
   options: string[];

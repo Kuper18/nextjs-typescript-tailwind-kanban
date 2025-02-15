@@ -1,4 +1,5 @@
 import React from 'react';
+
 import BoardIcon from '../atoms/icons/BoardIcon';
 import {
   SidebarMenu,

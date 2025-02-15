@@ -1,10 +1,13 @@
 'use client';
 
-import React from 'react';
-import { cn } from '@/lib/utils';
 import { EllipsisVertical } from 'lucide-react';
+import React from 'react';
+
+import { cn } from '@/lib/utils';
+
 import Logo from '../atoms/icons/Logo';
 import { useSidebar } from '../atoms/sidebar';
+
 import CreateTaskDialog from './CreateTaskDialog';
 import MobileMenu from './MobileMenu';
 

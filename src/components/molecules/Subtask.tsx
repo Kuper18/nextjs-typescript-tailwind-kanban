@@ -1,6 +1,8 @@
 import React from 'react';
-import { Checkbox } from '../atoms/checkbox';
+
 import { cn } from '@/lib/utils';
+
+import { Checkbox } from '../atoms/checkbox';
 
 type Props = {
   title: string;

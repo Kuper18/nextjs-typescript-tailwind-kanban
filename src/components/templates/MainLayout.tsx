@@ -1,9 +1,10 @@
 import React from 'react';
+
+import { ScrollArea, ScrollBar } from '../atoms/scroll-area';
 import { SidebarProvider, SidebarTrigger } from '../atoms/sidebar';
 import AsideMenu from '../organisms/AsideMenu';
 import Header from '../organisms/Header';
-import { ScrollArea, ScrollBar } from '../atoms/scroll-area';
-import Column from '../organisms/Column';
+
 import ColumnList from './ColumnList';
 
 const MainLayout = () => {

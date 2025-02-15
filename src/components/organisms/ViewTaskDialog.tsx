@@ -8,10 +8,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/atoms/dialog';
+
 import CardTask from '../molecules/CardTask';
-import Subtask from '../molecules/Subtask';
-import SelectInput from '../molecules/SelectComponent';
 import DropdownMenu from '../molecules/DropdownMenu';
+import SelectInput from '../molecules/SelectComponent';
+import Subtask from '../molecules/Subtask';
 
 const ViewTaskDialog = () => {
   return (

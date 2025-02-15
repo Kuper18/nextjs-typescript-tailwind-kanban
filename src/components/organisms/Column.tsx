@@ -1,6 +1,7 @@
 import React from 'react';
-import CardTask from '../molecules/CardTask';
+
 import DotColor from '../atoms/dot-color';
+
 import ViewTaskDialog from './ViewTaskDialog';
 
 const Column = () => {

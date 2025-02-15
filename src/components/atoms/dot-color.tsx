@@ -1,5 +1,6 @@
-import { generateRandomColor } from '@/utils';
 import React from 'react';
+
+import { generateRandomColor } from '@/utils';
 
 const DotColor = () => {
   return (

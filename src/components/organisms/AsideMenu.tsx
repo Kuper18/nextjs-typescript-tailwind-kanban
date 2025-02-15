@@ -1,4 +1,6 @@
 import React from 'react';
+
+import BoardIcon from '../atoms/icons/BoardIcon';
 import {
   Sidebar,
   SidebarContent,
@@ -11,7 +13,6 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from '../atoms/sidebar';
-import BoardIcon from '../atoms/icons/BoardIcon';
 import ToggleThemeButton from '../molecules/ToggleThemeButton';
 
 const items = [

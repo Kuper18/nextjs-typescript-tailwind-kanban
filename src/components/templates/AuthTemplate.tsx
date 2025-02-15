@@ -1,4 +1,5 @@
 import React from 'react';
+
 import AuthHeader from '../organisms/AuthHeader';
 
 const AuthTemplate = ({ children }: { children: React.ReactNode }) => {

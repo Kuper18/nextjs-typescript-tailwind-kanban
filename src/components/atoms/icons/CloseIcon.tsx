@@ -1,5 +1,6 @@
-import { IIcon } from '@/types';
 import React from 'react';
+
+import { IIcon } from '@/types';
 
 const CloseIcon = ({ fill, className }: IIcon) => {
   return (

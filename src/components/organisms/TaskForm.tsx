@@ -1,16 +1,15 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Plus } from 'lucide-react';
 import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { Plus } from 'lucide-react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { newTaskSchema } from '@/schemas/task';
 import { z } from 'zod';
-import { Form, FormLabel } from '../atoms/form';
-import FormInput from '../molecules/FormInput';
+
+import { newTaskSchema } from '@/schemas/task';
+
 import { Button } from '../atoms/button';
-import TextareaInput from '../molecules/TextareaInput';
-import SelectInput from '../molecules/SelectInput';
+import { Form, FormLabel } from '../atoms/form';
 import CloseIcon from '../atoms/icons/CloseIcon';
-import SubtaskInput from '../molecules/SubtaskInput';
+import FormInput from '../molecules/FormInput';
 
 type FormData = z.infer<typeof newTaskSchema>;
 
@@ -21,7 +20,7 @@ const TaskForm = () => {
       title: '',
       description: '',
       status: '',
-      subtasks: Array.from([1, 2], () => ({ title: '' })),
+      subtasks: Array.from([1, 2], () => ({ subtaskTitle: '' })),
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -37,13 +36,15 @@ const TaskForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         <FormInput
+          variant="common"
           form={form}
           label="Title"
           name="title"
           placeHolder="e.g. Take coffee break"
         />
 
-        <TextareaInput
+        <FormInput
+          variant="textarea"
           placeHolder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
           form={form}
           label="Description"
@@ -54,9 +55,10 @@ const TaskForm = () => {
           <FormLabel className="!-mb-1 block">Subtasks</FormLabel>
           {fields.map((field, index) => (
             <div key={field.id} className="flex items-center space-x-[16px]">
-              <SubtaskInput
+              <FormInput
+                variant="subtask"
                 form={form}
-                name={`subtasks.${index}.title`}
+                name={`subtasks.${index}.subtaskTitle`}
                 placeHolder="e.g. Make coffee"
               />
 
@@ -74,18 +76,19 @@ const TaskForm = () => {
             type="button"
             variant="secondary"
             className="w-full rounded-full"
-            onClick={() => append({ title: '' })}
+            onClick={() => append({ subtaskTitle: '' })}
           >
             <Plus className="h-3 w-3" />
             <span className="hidden sm:inline">Add New Subtask</span>
           </Button>
         </div>
 
-        <SelectInput
+        <FormInput
+          variant="select"
           form={form}
           label="Status"
           name="status"
-          options={[{ id: 1, name: '211231' }]}
+          options={[{ value: 1, label: '211231' }]}
         />
 
         <Button type="submit" className="w-full">

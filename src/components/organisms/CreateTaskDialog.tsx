@@ -1,5 +1,7 @@
+import { Plus } from 'lucide-react';
 import React from 'react';
 
+import { Button } from '@/components/atoms/button';
 import {
   Dialog,
   DialogContent,
@@ -8,8 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/atoms/dialog';
-import { Plus } from 'lucide-react';
-import { Button } from '../atoms/button';
+
 import TaskForm from './TaskForm';
 
 const CreateTaskDialog = () => {
