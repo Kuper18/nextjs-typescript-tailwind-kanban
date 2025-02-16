@@ -21,6 +21,8 @@ import {
 } from '../atoms/sidebar';
 import ToggleThemeButton from '../molecules/ToggleThemeButton';
 
+import CreateBoardDialog from './CreateBoardDialog';
+
 const AsideMenu = () => {
   const { data: boards } = useQuery({
     queryKey: ['boards'],
@@ -54,12 +56,7 @@ const AsideMenu = () => {
                 ))}
 
                 <SidebarMenuItem>
-                  <SidebarMenuButton variant="outline" asChild>
-                    <span>
-                      <BoardIcon />
-                      <span>+ Create New Board</span>
-                    </span>
-                  </SidebarMenuButton>
+                  <CreateBoardDialog />
                 </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>

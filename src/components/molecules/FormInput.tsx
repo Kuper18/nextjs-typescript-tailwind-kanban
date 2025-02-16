@@ -2,7 +2,8 @@ import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';
 import {
   UseFormReturn,
-  Path, FieldValues,
+  Path,
+  FieldValues,
   FieldErrors,
 } from 'react-hook-form';
 
@@ -28,7 +29,7 @@ import { Textarea } from '../atoms/textarea';
 
 type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
-  variant: 'common' | 'password' | 'select' | 'subtask' | 'textarea';
+  variant: 'common' | 'password' | 'select' | 'array' | 'textarea';
   name: Path<T>;
   options?: { value: number; label: string }[];
   label?: string;
@@ -46,13 +47,13 @@ const FormInput = <T extends FieldValues>({
   const [isShownPassword, setIsShownPassword] = useState(false);
 
   const hasNumber = !!name.match(/[0-9]/g);
-  const [subtasks, index, title] = name.split('.');
-  const subtaskField = `${subtasks}[${index}].${title}` as Path<T>;
+  const [arrayName, index, title] = name.split('.');
+  const subtaskField = `${arrayName}[${index}].${title}` as Path<T>;
   const {
     formState: { errors },
   } = form;
 
-  const arrayErrors: FieldErrors<{ subtasks: { subtaskTitle: string }[] }> = errors;
+  const arrayErrors: FieldErrors<{ [K: string]: { [S: string]: string }[] }> = errors;
 
   const handleClick = () => setIsShownPassword((prev) => !prev);
 
@@ -90,15 +91,14 @@ const FormInput = <T extends FieldValues>({
                 />
               )}
 
-              {variant === 'subtask' && (
+              {variant === 'array' && (
                 <>
                   <Input
                     type="text"
                     placeholder={placeHolder ?? label}
                     {...field}
                     className={cn(
-                      arrayErrors.subtasks?.[Number(index)]
-                        ?.subtaskTitle
+                      arrayErrors?.[arrayName]?.[Number(index)]?.[title]
                         ? 'border-destructive focus:border-destructive'
                         : undefined,
                     )}
@@ -162,7 +162,7 @@ const FormInput = <T extends FieldValues>({
               )}
             </div>
           </FormControl>
-          {variant !== 'subtask' && <FormMessage />}
+          {variant !== 'array' && <FormMessage />}
         </FormItem>
       )}
     />
