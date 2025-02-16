@@ -1,9 +1,10 @@
 import axiosInstance from '@/axios-settings';
 import { setCookies } from '@/utils';
+
 import { ILoginBody, ITokenResponse } from './types';
 
 class AuthService {
-  async login(body: ILoginBody) {
+  static async login(body: ILoginBody) {
     try {
       const { data } = await axiosInstance.post<ITokenResponse>(
         '/auth/login',
@@ -19,6 +20,4 @@ class AuthService {
   }
 }
 
-const authApi = new AuthService();
-
-export default authApi;
+export default AuthService;

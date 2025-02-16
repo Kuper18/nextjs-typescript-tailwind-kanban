@@ -1,6 +1,12 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
+import BoardsService from '@/services/boards';
+
 import BoardIcon from '../atoms/icons/BoardIcon';
+import { ScrollArea } from '../atoms/scroll-area';
 import {
   Sidebar,
   SidebarContent,
@@ -15,57 +21,50 @@ import {
 } from '../atoms/sidebar';
 import ToggleThemeButton from '../molecules/ToggleThemeButton';
 
-const items = [
-  {
-    title: 'Platform Launch',
-    url: '#',
-  },
-  {
-    title: 'Marketing Plan',
-    url: '#',
-  },
-  {
-    title: 'Roadmap',
-    url: '#',
-  },
-];
-
 const AsideMenu = () => {
+  const { data: boards } = useQuery({
+    queryKey: ['boards'],
+    queryFn: BoardsService.get,
+    staleTime: 60 * 1000,
+  });
+
   return (
     <Sidebar className="pt-16 sm:pt-[81px] lg:pt-24">
       <SidebarHeader className="mb-[19px] ml-6 mt-[15px] lg:ml-8">
-        ALL BOARDS (3)
+        {`ALL BOARDS (${boards?.length})`}
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup className="w-[240px] p-0 lg:w-[276px]">
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item, i) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    variant={i === 0 ? 'active' : 'default'}
-                    asChild
-                  >
+        <ScrollArea>
+          <SidebarGroup className="w-[240px] p-0 lg:w-[276px]">
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {boards?.map((board, i) => (
+                  <SidebarMenuItem key={board.id}>
+                    <SidebarMenuButton
+                      variant={i === 0 ? 'active' : 'default'}
+                      asChild
+                    >
+                      <span>
+                        <BoardIcon className="group/menu-item-hover:stroke-white transition-colors" />
+                        <span>{board.name}</span>
+                      </span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton variant="outline" asChild>
                     <span>
-                      <BoardIcon className="group/menu-item-hover:stroke-white transition-colors" />
-                      <span>{item.title}</span>
+                      <BoardIcon />
+                      <span>+ Create New Board</span>
                     </span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              ))}
-
-              <SidebarMenuItem>
-                <SidebarMenuButton variant="outline" asChild>
-                  <span>
-                    <BoardIcon />
-                    <span>+ Create New Board</span>
-                  </span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </ScrollArea>
       </SidebarContent>
 
       <SidebarFooter className="p-0 pb-8">

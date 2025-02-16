@@ -1,8 +1,11 @@
-import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import React from 'react';
+
 import './globals.css';
+import QueryClientProvider from '@/providers/query-client-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
+
+import type { Metadata } from 'next';
 
 const plus_jakarta_sans = Plus_Jakarta_Sans({
   variable: '--font-plus-jakarta-sans',
@@ -24,14 +27,16 @@ const RootLayout = ({
       <body
         className={`${plus_jakarta_sans.variable} bg-background text-foreground antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <QueryClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

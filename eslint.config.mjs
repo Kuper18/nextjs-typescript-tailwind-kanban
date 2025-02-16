@@ -24,6 +24,7 @@ const eslintConfig = [
   ),
   {
     rules: {
+      'no-useless-catch': 'off',
       'no-shadow': 'off',
       'import/order': [
         'error',

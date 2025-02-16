@@ -4,8 +4,8 @@ import Column from '../organisms/Column';
 
 const ColumnList = () => {
   return (
-    <div className="flex space-x-6">
-      {[1, 2, 3, 4, 5].map((item) => (
+    <div className="flex h-[calc(100vh-134px)] space-x-6">
+      {[1, 2, 3, 4, 5, 6].map((item) => (
         <Column key={item} />
       ))}
     </div>
