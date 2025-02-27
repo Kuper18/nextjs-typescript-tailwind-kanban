@@ -1,34 +1,22 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
 import React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { z } from 'zod';
 
-import { newBoardSchema } from '@/schemas/board';
+import useBoardsForm from '@/hooks/boards/use-boards-form';
 
 import { Button } from '../atoms/button';
 import { Form, FormLabel } from '../atoms/form';
 import CloseIcon from '../atoms/icons/CloseIcon';
 import FormInput from '../molecules/FormInput';
 
-type FormData = z.infer<typeof newBoardSchema>;
-
 const BoardFrom = () => {
-  const form = useForm<FormData>({
-    resolver: zodResolver(newBoardSchema),
-    defaultValues: {
-      name: '',
-      columns: Array.from([1, 2], () => ({ title: '' })),
-    },
-  });
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: 'columns',
-  });
-
-  const handleSubmit = (data: FormData) => {
-    console.log(data);
-  };
+  const {
+    isLoading,
+    form,
+    fields,
+    append,
+    handleSubmit,
+    remove,
+  } = useBoardsForm();
 
   return (
     <Form {...form}>
@@ -48,7 +36,7 @@ const BoardFrom = () => {
               <FormInput
                 variant="array"
                 form={form}
-                name={`columns.${index}.title`}
+                name={`columns.${index}.name`}
                 placeHolder="e.g in progress"
               />
 
@@ -66,14 +54,19 @@ const BoardFrom = () => {
             type="button"
             variant="secondary"
             className="w-full rounded-full"
-            onClick={() => append({ title: '' })}
+            onClick={() => append({ name: '' })}
           >
             <Plus className="h-3 w-3" />
             <span className="hidden sm:inline">Add New Column</span>
           </Button>
         </div>
 
-        <Button type="submit" className="w-full">
+        <Button
+          disabled={isLoading}
+          isLoading={isLoading}
+          type="submit"
+          className="w-full"
+        >
           Create New Board
         </Button>
       </form>

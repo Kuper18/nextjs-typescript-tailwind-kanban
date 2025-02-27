@@ -48,7 +48,7 @@ const FormInput = <T extends FieldValues>({
 
   const hasNumber = !!name.match(/[0-9]/g);
   const [arrayName, index, title] = name.split('.');
-  const subtaskField = `${arrayName}[${index}].${title}` as Path<T>;
+  const arrayField = `${arrayName}[${index}].${title}` as Path<T>;
   const {
     formState: { errors },
   } = form;
@@ -60,7 +60,7 @@ const FormInput = <T extends FieldValues>({
   return (
     <FormField
       control={form.control}
-      name={hasNumber ? subtaskField : name}
+      name={hasNumber ? arrayField : name}
       render={({ field }) => (
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}

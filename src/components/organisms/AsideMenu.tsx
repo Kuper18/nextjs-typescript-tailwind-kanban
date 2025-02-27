@@ -1,9 +1,8 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import BoardsService from '@/services/boards';
+import useBoards from '@/hooks/boards/use-boards';
 
 import BoardIcon from '../atoms/icons/BoardIcon';
 import { ScrollArea } from '../atoms/scroll-area';
@@ -24,11 +23,7 @@ import ToggleThemeButton from '../molecules/ToggleThemeButton';
 import CreateBoardDialog from './CreateBoardDialog';
 
 const AsideMenu = () => {
-  const { data: boards } = useQuery({
-    queryKey: ['boards'],
-    queryFn: BoardsService.get,
-    staleTime: 60 * 1000,
-  });
+  const { data: boards } = useBoards();
 
   return (
     <Sidebar className="pt-16 sm:pt-[81px] lg:pt-24">
