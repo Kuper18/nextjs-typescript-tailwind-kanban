@@ -9,7 +9,7 @@ import TasksService from '@/services/tasks';
 
 type FormData = z.infer<typeof newTaskSchema>;
 
-const useTasksForm = (triggerModal: () => void) => {
+const useTasksCreateForm = (triggerModal: () => void) => {
   const queryClient = useQueryClient();
 
   const form = useForm<FormData>({
@@ -63,4 +63,4 @@ const useTasksForm = (triggerModal: () => void) => {
   };
 };
 
-export default useTasksForm;
+export default useTasksCreateForm;

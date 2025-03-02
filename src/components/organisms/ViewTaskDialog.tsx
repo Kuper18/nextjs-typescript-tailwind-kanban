@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import {
   Dialog,
@@ -8,13 +8,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/atoms/dialog';
+import useColumns from '@/hooks/columns/use-columns';
+import { IDropdownOption } from '@/types';
 
+import { Select, SelectTrigger, SelectValue } from '../atoms/select';
 import CardTask from '../molecules/CardTask';
 import DropdownMenu from '../molecules/DropdownMenu';
-import SelectInput from '../molecules/SelectComponent';
 import Subtask from '../molecules/Subtask';
 
 type Props = {
+  columnId: number;
   id: number;
   title: string;
   description: string | null;
@@ -27,10 +30,26 @@ type Props = {
 
 const ViewTaskDialog: React.FC<Props> = ({
   description,
+  columnId,
   id,
   subtasks,
   title,
 }) => {
+  const { data: columns } = useColumns();
+  const column = columns?.find((col) => col.id === columnId);
+  const options: IDropdownOption[] = useMemo(
+    () => [
+      { title: 'Edit Task', action: () => {} },
+      {
+        title: 'Delete Task',
+        action: () => {},
+        className:
+          'text-destructive text-[13px] font-medium focus:text-destructive',
+      },
+    ],
+    [],
+  );
+
   return (
     <article>
       <Dialog>
@@ -43,7 +62,7 @@ const ViewTaskDialog: React.FC<Props> = ({
             <DialogTitle className="max-w-[387px] font-bold leading-6">
               {title}
             </DialogTitle>
-            <DropdownMenu options={['Edit Task', 'Delete Task']} />
+            <DropdownMenu options={options} />
           </DialogHeader>
 
           <DialogDescription className="text-[13px] font-medium text-input-foreground">
@@ -57,10 +76,7 @@ const ViewTaskDialog: React.FC<Props> = ({
 
             <ul className="space-y-2">
               {subtasks.map((item) => (
-                <Subtask
-                  {...item}
-                  key={item.id}
-                />
+                <Subtask {...item} key={item.id} />
               ))}
             </ul>
           </div>
@@ -69,7 +85,12 @@ const ViewTaskDialog: React.FC<Props> = ({
             <p className="mb-2 text-xs font-bold text-input-foreground">
               Current status
             </p>
-            <SelectInput options={[{ id: 1, name: 'Option' }]} />
+
+            <Select>
+              <SelectTrigger className="text-body-l">
+                <SelectValue placeholder={column?.name} />
+              </SelectTrigger>
+            </Select>
           </div>
         </DialogContent>
       </Dialog>

@@ -4,7 +4,7 @@ import { Plus } from 'lucide-react';
 import React from 'react';
 
 import useColumns from '@/hooks/columns/use-columns';
-import useTasksForm from '@/hooks/tasks/use-tasks-form';
+import useTasksCreateForm from '@/hooks/tasks/use-tasks-form';
 
 import { Button } from '../atoms/button';
 import { Form, FormLabel } from '../atoms/form';
@@ -17,13 +17,8 @@ type Props = {
 
 const TaskForm: React.FC<Props> = ({ triggerModal }) => {
   const { data: columns } = useColumns();
-  const {
-    fields,
-    form,
-    handleSubmit,
-    append,
-    remove,
-  } = useTasksForm(triggerModal);
+  const { fields, form, handleSubmit, append, remove } =
+    useTasksCreateForm(triggerModal);
 
   return (
     <Form {...form}>

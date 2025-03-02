@@ -7,9 +7,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/atoms/dropdown-menu';
+import { IDropdownOption } from '@/types';
 
 type Props = {
-  options: string[];
+  options: IDropdownOption[];
 };
 
 const DropdownMenu = ({ options }: Props) => {
@@ -20,8 +21,10 @@ const DropdownMenu = ({ options }: Props) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-[192px] border-none">
-        {options.map((option) => (
-          <DropdownMenuItem key={option}>{option}</DropdownMenuItem>
+        {options.map(({ title, action, className }) => (
+          <DropdownMenuItem className={className} onClick={action} key={title}>
+            {title}
+          </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenuAtom>

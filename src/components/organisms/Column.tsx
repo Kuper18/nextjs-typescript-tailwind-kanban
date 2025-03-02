@@ -35,7 +35,7 @@ const Column: React.FC<Props> = ({ id, name, tasks }) => {
         </h3>
         <div className="space-y-5">
           {tasks.length ? (
-            tasks?.map((item) => <ViewTaskDialog key={item.id} {...item} />)
+            tasks?.map((item) => <ViewTaskDialog columnId={id} key={item.id} {...item} />)
           ) : (
             <CreateTaskDialog>
               <Button className="flex min-h-[89px] w-[280px] flex-col rounded-lg bg-background text-secondary-foreground shadow-custom hover:bg-background">
