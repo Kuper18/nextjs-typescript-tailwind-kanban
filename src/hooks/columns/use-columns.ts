@@ -1,8 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 
 import ColumnsService from '@/services/columns';
 
-const useColumns = (boardId: string) => {
+const useColumns = () => {
+  const { boardId } = useParams<{ boardId: string }>();
+
   return useQuery({
     queryKey: ['columns', boardId],
     queryFn: async () => ColumnsService.get(boardId),

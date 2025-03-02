@@ -12,10 +12,14 @@ type Props = {
 };
 
 const CardTask: React.FC<Props> = ({ subtasks, title }) => {
+  const completedSubtasks = subtasks.filter((subtask) => subtask.isCompleted);
+
   return (
     <Card className="w-[280px] border-none px-[16px] py-[23px] shadow-custom">
       <h3 className="mb-2 text-heading-m leading-5">{title}</h3>
-      <p className="text-body-m text-secondary-foreground">{`0 of ${subtasks.length} substasks`}</p>
+      <p className="text-body-m text-secondary-foreground">
+        {`${completedSubtasks.length} of ${subtasks.length} substasks`}
+      </p>
     </Card>
   );
 };

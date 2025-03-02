@@ -1,36 +1,29 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+'use client';
+
 import { Plus } from 'lucide-react';
 import React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { z } from 'zod';
 
-import { newTaskSchema } from '@/schemas/task';
+import useColumns from '@/hooks/columns/use-columns';
+import useTasksForm from '@/hooks/tasks/use-tasks-form';
 
 import { Button } from '../atoms/button';
 import { Form, FormLabel } from '../atoms/form';
 import CloseIcon from '../atoms/icons/CloseIcon';
 import FormInput from '../molecules/FormInput';
 
-type FormData = z.infer<typeof newTaskSchema>;
+type Props = {
+  triggerModal: () => void;
+};
 
-const TaskForm = () => {
-  const form = useForm<FormData>({
-    resolver: zodResolver(newTaskSchema),
-    defaultValues: {
-      title: '',
-      description: '',
-      status: '',
-      subtasks: Array.from([1, 2], () => ({ subtaskTitle: '' })),
-    },
-  });
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: 'subtasks',
-  });
-
-  const handleSubmit = (data: FormData) => {
-    console.log(data);
-  };
+const TaskForm: React.FC<Props> = ({ triggerModal }) => {
+  const { data: columns } = useColumns();
+  const {
+    fields,
+    form,
+    handleSubmit,
+    append,
+    remove,
+  } = useTasksForm(triggerModal);
 
   return (
     <Form {...form}>
@@ -88,7 +81,7 @@ const TaskForm = () => {
           form={form}
           label="Status"
           name="status"
-          options={[{ value: 1, label: 'In progress' }]}
+          options={columns?.map(({ id, name }) => ({ label: name, value: id }))}
         />
 
         <Button type="submit" className="w-full">

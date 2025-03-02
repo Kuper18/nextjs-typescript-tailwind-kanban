@@ -1,10 +1,11 @@
+import { Plus } from 'lucide-react';
 import React from 'react';
 
-import useTasks from '@/hooks/tasks/use-tasks';
-
+import { Button } from '../atoms/button';
 import DotColor from '../atoms/dot-color';
 import { ScrollArea } from '../atoms/scroll-area';
 
+import CreateTaskDialog from './CreateTaskDialog';
 import ViewTaskDialog from './ViewTaskDialog';
 
 type Props = {
@@ -33,7 +34,16 @@ const Column: React.FC<Props> = ({ id, name, tasks }) => {
           {name}
         </h3>
         <div className="space-y-5">
-          {tasks?.map((item) => <ViewTaskDialog key={item.id} {...item} />)}
+          {tasks.length ? (
+            tasks?.map((item) => <ViewTaskDialog key={item.id} {...item} />)
+          ) : (
+            <CreateTaskDialog>
+              <Button className="flex min-h-[89px] w-[280px] flex-col rounded-lg bg-background text-secondary-foreground shadow-custom hover:bg-background">
+                Add New Task
+                <Plus />
+              </Button>
+            </CreateTaskDialog>
+          )}
         </div>
       </ScrollArea>
     </section>

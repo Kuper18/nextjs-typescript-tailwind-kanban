@@ -1,7 +1,5 @@
-import { Plus } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Button } from '@/components/atoms/button';
 import {
   Dialog,
   DialogContent,
@@ -13,15 +11,22 @@ import {
 
 import TaskForm from './TaskForm';
 
-const CreateTaskDialog = () => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const CreateTaskDialog: React.FC<Props> = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const triggerModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <article>
-      <Dialog>
-        <DialogTrigger asChild className="text-left">
-          <Button size="lg" className="w-12 sm:w-[164px]">
-            <Plus className="h-3 w-3" />
-            <span className="hidden sm:inline">Add New Task</span>
-          </Button>
+      <Dialog open={isOpen} onOpenChange={(value) => setIsOpen(value)}>
+        <DialogTrigger onClick={triggerModal} asChild className="text-left">
+          {children}
         </DialogTrigger>
 
         <DialogContent
@@ -38,7 +43,7 @@ const CreateTaskDialog = () => {
             Input the data to create a new task for the column
           </DialogDescription>
 
-          <TaskForm />
+          <TaskForm triggerModal={triggerModal} />
         </DialogContent>
       </Dialog>
     </article>
