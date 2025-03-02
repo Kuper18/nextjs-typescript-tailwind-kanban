@@ -1,9 +1,9 @@
 import React from 'react';
 
-import MainLayout from '../templates/MainLayout';
+import ColumnPage from '@/app/[boardId]/page';
 
 const MainPage = () => {
-  return <MainLayout />;
+  return <ColumnPage />;
 };
 
 export default MainPage;

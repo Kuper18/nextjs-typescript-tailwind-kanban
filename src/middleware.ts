@@ -1,7 +1,9 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
+import { NextResponse } from 'next/server';
+
 import { Token } from './enums/token';
+
+import type { NextRequest } from 'next/server';
 
 export async function middleware(req: NextRequest) {
   const refreshToken = req.cookies.get(Token.REFRESH);
@@ -41,5 +43,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/login', '/signup'],
+  matcher: ['/', '/login', '/signup', '/:boardId'],
 };

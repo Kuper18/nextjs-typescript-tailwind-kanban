@@ -1,6 +1,7 @@
+import Cookies from 'js-cookie';
+
 import { Token } from '@/enums/token';
 import { ITokenResponse } from '@/services/auth/types';
-import Cookies from 'js-cookie';
 
 export const setCookies = ({
   access_token,
@@ -27,7 +28,7 @@ export const generateRandomColor = (): string => {
   const green = getRandomIntInclusive(0, 255);
   const blue = getRandomIntInclusive(0, 255);
 
-  return `rgb(${red}, ${green}, ${blue})`
+  return `rgb(${red}, ${green}, ${blue})`;
 };
 
 function getRandomIntInclusive(min: number, max: number) {

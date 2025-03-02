@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React from 'react';
 
 import useBoards from '@/hooks/boards/use-boards';
@@ -23,6 +25,7 @@ import ToggleThemeButton from '../molecules/ToggleThemeButton';
 import CreateBoardDialog from './CreateBoardDialog';
 
 const AsideMenu = () => {
+  const { boardId } = useParams();
   const { data: boards } = useBoards();
 
   return (
@@ -36,18 +39,20 @@ const AsideMenu = () => {
           <SidebarGroup className="w-[240px] p-0 lg:w-[276px]">
             <SidebarGroupContent>
               <SidebarMenu>
-                {boards?.map((board, i) => (
-                  <SidebarMenuItem key={board.id}>
-                    <SidebarMenuButton
-                      variant={i === 0 ? 'active' : 'default'}
-                      asChild
-                    >
-                      <span>
-                        <BoardIcon className="group/menu-item-hover:stroke-white transition-colors" />
-                        <span>{board.name}</span>
-                      </span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                {boards?.map((board) => (
+                  <Link key={board.id} href={`/${board.id}`}>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        variant={boardId === `${board.id}` ? 'active' : 'default'}
+                        asChild
+                      >
+                        <span>
+                          <BoardIcon className="group/menu-item-hover:stroke-white transition-colors" />
+                          <span>{board.name}</span>
+                        </span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </Link>
                 ))}
 
                 <SidebarMenuItem>

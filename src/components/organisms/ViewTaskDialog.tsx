@@ -14,37 +14,54 @@ import DropdownMenu from '../molecules/DropdownMenu';
 import SelectInput from '../molecules/SelectComponent';
 import Subtask from '../molecules/Subtask';
 
-const ViewTaskDialog = () => {
+type Props = {
+  id: number;
+  title: string;
+  description: string | null;
+  subtasks: {
+    id: number;
+    title: string;
+    isCompleted: boolean;
+  }[];
+};
+
+const ViewTaskDialog: React.FC<Props> = ({
+  description,
+  id,
+  subtasks,
+  title,
+}) => {
   return (
     <article>
       <Dialog>
         <DialogTrigger className="text-left">
-          <CardTask />
+          <CardTask title={title} subtasks={subtasks} />
         </DialogTrigger>
 
         <DialogContent hideCloseIcon className="gap-6">
           <DialogHeader className="flex flex-row items-center justify-between space-x-6">
             <DialogTitle className="max-w-[387px] font-bold leading-6">
-              Research pricing points of various competitors and trial different
-              business models
+              {title}
             </DialogTitle>
             <DropdownMenu options={['Edit Task', 'Delete Task']} />
           </DialogHeader>
 
           <DialogDescription className="text-[13px] font-medium text-input-foreground">
-            We know what we're planning to build for version one. Now we need to
-            finalise the first pricing model we'll use. Keep iterating the
-            subtasks until we have a coherent proposition.
+            {description}
           </DialogDescription>
 
           <div>
             <DialogDescription className="mb-[16px] text-xs font-bold text-input-foreground">
-              Subtasks (2 of 3)
+              {`Subtasks (1 of ${subtasks.length})`}
             </DialogDescription>
 
             <ul className="space-y-2">
-              <Subtask isCompleted title="" />
-              <Subtask isCompleted={false} title="" />
+              {subtasks.map((item) => (
+                <Subtask
+                  {...item}
+                  key={item.id}
+                />
+              ))}
             </ul>
           </div>
 

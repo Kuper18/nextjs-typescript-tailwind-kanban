@@ -1,13 +1,22 @@
-import React from 'react';
+'use client';
+
+import React, { Usable } from 'react';
+
+import useColumns from '@/hooks/columns/use-columns';
 
 import Column from '../organisms/Column';
 
-const ColumnList = () => {
+type Props = {
+  params: Usable<{ boardId: string }>;
+};
+
+const ColumnList: React.FC<Props> = ({ params }) => {
+  const { boardId } = React.use(params);
+  const { data: columns } = useColumns(boardId);
+
   return (
     <div className="flex h-[calc(100vh-134px)] space-x-6">
-      {[1, 2, 3, 4, 5, 6].map((item) => (
-        <Column key={item} />
-      ))}
+      {columns?.map((item) => <Column key={item.id} {...item} />)}
     </div>
   );
 };

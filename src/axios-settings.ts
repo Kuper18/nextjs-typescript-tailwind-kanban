@@ -1,8 +1,9 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
+
+import { Token } from './enums/token';
 import { ITokenResponse } from './services/auth/types';
 import { removeCookies, setCookies } from './utils';
-import { Token } from './enums/token';
 
 const API_CONFIG = {
   baseURL: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000',
@@ -46,8 +47,7 @@ axiosInstance.interceptors.response.use(
         );
 
         setCookies(data);
-        axiosInstance.defaults.headers.common['Authorization'] =
-          `Bearer ${data.access_token}`;
+        axiosInstance.defaults.headers.common.Authorization = `Bearer ${data.access_token}`;
 
         return axiosInstance(originalRequest);
       } catch (refreshError) {
@@ -64,7 +64,7 @@ axiosInstance.interceptors.response.use(
 
 const clearAuthTokens = (): void => {
   removeCookies();
-  delete axiosInstance.defaults.headers.common['Authorization'];
+  delete axiosInstance.defaults.headers.common.Authorization;
 };
 
 export default axiosInstance;
