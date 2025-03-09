@@ -24,6 +24,7 @@ const eslintConfig = [
   ),
   {
     rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
       'no-useless-catch': 'off',
       'no-shadow': 'off',
       'import/order': [

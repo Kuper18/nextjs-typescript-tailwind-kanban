@@ -2,6 +2,8 @@ import { Plus_Jakarta_Sans } from 'next/font/google';
 import React from 'react';
 
 import './globals.css';
+import { ToastContainer } from 'react-toastify';
+
 import QueryClientProvider from '@/providers/query-client-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
@@ -34,6 +36,7 @@ const RootLayout = ({
             enableSystem
             disableTransitionOnChange
           >
+            <ToastContainer />
             {children}
           </ThemeProvider>
         </QueryClientProvider>

@@ -22,6 +22,16 @@ class SubtasksService {
       throw error;
     }
   }
+
+  static async delete(id: string) {
+    try {
+      const { data } = await axiosInstance.delete(`/subtasks/${id}`);
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default SubtasksService;

@@ -1,7 +1,10 @@
+import { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 import { Token } from '@/enums/token';
 import { ITokenResponse } from '@/services/auth/types';
+import { TNotificationType } from '@/types';
 
 export const setCookies = ({
   access_token,
@@ -37,3 +40,14 @@ function getRandomIntInclusive(min: number, max: number) {
 
   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
 }
+
+export const showNotification = (type: TNotificationType, message: string) => {
+  toast[type](message, {
+    closeButton: true,
+  });
+};
+
+export const handleErrorResponse = (error: AxiosError) => {
+  const data = error.response?.data as { message: string };
+  showNotification('error', data.message);
+};

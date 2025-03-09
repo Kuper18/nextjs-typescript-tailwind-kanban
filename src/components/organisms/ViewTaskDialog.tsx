@@ -10,7 +10,7 @@ import {
 } from '@/components/atoms/dialog';
 import useColumns from '@/hooks/columns/use-columns';
 import useTaskToUpdate from '@/store/tasks';
-import { IDropdownOption, TAction } from '@/types';
+import { IDropdownOption } from '@/types';
 
 import { Select, SelectTrigger, SelectValue } from '../atoms/select';
 import CardTask from '../molecules/CardTask';

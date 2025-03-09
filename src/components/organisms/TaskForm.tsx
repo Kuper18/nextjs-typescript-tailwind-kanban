@@ -4,7 +4,7 @@ import { Plus } from 'lucide-react';
 import React from 'react';
 
 import useColumns from '@/hooks/columns/use-columns';
-import useTaskForm from '@/hooks/tasks/use-tasks-form';
+import useTaskForm from '@/hooks/tasks/use-task-form';
 import { TAction } from '@/types';
 
 import { Button } from '../atoms/button';
@@ -18,7 +18,14 @@ type Props = {
 
 const TaskForm: React.FC<Props> = ({ action }) => {
   const { data: columns } = useColumns();
-  const { fields, form, handleSubmit, append, remove, handleRemove } = useTaskForm(action);
+  const {
+    fields,
+    form,
+    isLoading,
+    handleSubmit,
+    append,
+    handleRemove,
+  } = useTaskForm(action);
 
   return (
     <Form {...form}>
@@ -79,7 +86,7 @@ const TaskForm: React.FC<Props> = ({ action }) => {
           options={columns?.map(({ id, name }) => ({ label: name, value: id }))}
         />
 
-        <Button type="submit" className="w-full">
+        <Button isLoading={isLoading} type="submit" className="w-full">
           {action === 'create' ? 'Create Task' : 'Save Changes'}
         </Button>
       </form>
