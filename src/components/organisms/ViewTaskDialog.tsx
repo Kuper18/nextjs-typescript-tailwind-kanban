@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import {
   Dialog,
@@ -39,7 +39,7 @@ const ViewTaskDialog: React.FC<Props> = ({
   const { data: columns } = useColumns();
   const { setTaskToUpdate, triggerOpenModal } = useTaskToUpdate();
 
-  const handleUpdateTask = () => {
+  const handleUpdateTask = useCallback(() => {
     setTaskToUpdate({
       description,
       id,
@@ -48,7 +48,7 @@ const ViewTaskDialog: React.FC<Props> = ({
       title,
     });
     triggerOpenModal();
-  };
+  }, [columnId, description, id, subtasks, title]);
 
   const column = columns?.find((col) => col.id === columnId);
   const options: IDropdownOption[] = useMemo(
@@ -61,7 +61,7 @@ const ViewTaskDialog: React.FC<Props> = ({
           'text-destructive text-[13px] font-medium focus:text-destructive',
       },
     ],
-    [],
+    [handleUpdateTask],
   );
 
   return (
