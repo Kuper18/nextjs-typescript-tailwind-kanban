@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   Dialog,
@@ -8,6 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/atoms/dialog';
+import useTaskToUpdateStore from '@/store/tasks';
+import { TAction } from '@/types';
 
 import TaskForm from './TaskForm';
 
@@ -16,16 +18,30 @@ type Props = {
 };
 
 const CreateTaskDialog: React.FC<Props> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const {
+    isOpenModal,
+    task,
+    triggerOpenModal,
+    resetTaskToUpdate,
+  } = useTaskToUpdateStore();
 
-  const triggerModal = () => {
-    setIsOpen((prev) => !prev);
+  const action: TAction = task ? 'update' : 'create';
+
+  const handleOpenChange = (value: boolean) => {
+    triggerOpenModal(value);
+
+    if (task) {
+      resetTaskToUpdate();
+    }
   };
 
   return (
     <article>
-      <Dialog open={isOpen} onOpenChange={(value) => setIsOpen(value)}>
-        <DialogTrigger onClick={triggerModal} asChild className="text-left">
+      <Dialog
+        open={isOpenModal}
+        onOpenChange={(value) => handleOpenChange(value)}
+      >
+        <DialogTrigger asChild className="text-left">
           {children}
         </DialogTrigger>
 
@@ -35,7 +51,7 @@ const CreateTaskDialog: React.FC<Props> = ({ children }) => {
         >
           <DialogHeader className="flex flex-row items-center justify-between space-x-6">
             <DialogTitle className="max-w-[387px] font-bold leading-6">
-              Add New Task
+              {action === 'create' ? 'Add New Task' : 'Edit Task'}
             </DialogTitle>
           </DialogHeader>
 
@@ -43,7 +59,7 @@ const CreateTaskDialog: React.FC<Props> = ({ children }) => {
             Input the data to create a new task for the column
           </DialogDescription>
 
-          <TaskForm triggerModal={triggerModal} />
+          <TaskForm action={action} />
         </DialogContent>
       </Dialog>
     </article>

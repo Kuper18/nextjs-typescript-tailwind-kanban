@@ -7,3 +7,7 @@ export interface ITask {
 export interface ITaskBody extends Omit<ITask, 'id'> {
   columnId: number;
 }
+
+export interface ITaskBodyUpdate extends ITaskBody {
+  taskId: number;
+}

@@ -9,7 +9,8 @@ import {
   DialogTrigger,
 } from '@/components/atoms/dialog';
 import useColumns from '@/hooks/columns/use-columns';
-import { IDropdownOption } from '@/types';
+import useTaskToUpdate from '@/store/tasks';
+import { IDropdownOption, TAction } from '@/types';
 
 import { Select, SelectTrigger, SelectValue } from '../atoms/select';
 import CardTask from '../molecules/CardTask';
@@ -36,10 +37,23 @@ const ViewTaskDialog: React.FC<Props> = ({
   title,
 }) => {
   const { data: columns } = useColumns();
+  const { setTaskToUpdate, triggerOpenModal } = useTaskToUpdate();
+
+  const handleUpdateTask = () => {
+    setTaskToUpdate({
+      description,
+      id,
+      subtasks,
+      status: columnId,
+      title,
+    });
+    triggerOpenModal();
+  };
+
   const column = columns?.find((col) => col.id === columnId);
   const options: IDropdownOption[] = useMemo(
     () => [
-      { title: 'Edit Task', action: () => {} },
+      { title: 'Edit Task', action: handleUpdateTask },
       {
         title: 'Delete Task',
         action: () => {},

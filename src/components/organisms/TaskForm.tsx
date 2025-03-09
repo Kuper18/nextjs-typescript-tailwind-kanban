@@ -4,7 +4,8 @@ import { Plus } from 'lucide-react';
 import React from 'react';
 
 import useColumns from '@/hooks/columns/use-columns';
-import useTasksCreateForm from '@/hooks/tasks/use-tasks-form';
+import useTaskForm from '@/hooks/tasks/use-tasks-form';
+import { TAction } from '@/types';
 
 import { Button } from '../atoms/button';
 import { Form, FormLabel } from '../atoms/form';
@@ -12,13 +13,12 @@ import CloseIcon from '../atoms/icons/CloseIcon';
 import FormInput from '../molecules/FormInput';
 
 type Props = {
-  triggerModal: () => void;
+  action: TAction;
 };
 
-const TaskForm: React.FC<Props> = ({ triggerModal }) => {
+const TaskForm: React.FC<Props> = ({ action }) => {
   const { data: columns } = useColumns();
-  const { fields, form, handleSubmit, append, remove } =
-    useTasksCreateForm(triggerModal);
+  const { fields, form, handleSubmit, append, remove, handleRemove } = useTaskForm(action);
 
   return (
     <Form {...form}>
@@ -53,7 +53,7 @@ const TaskForm: React.FC<Props> = ({ triggerModal }) => {
               <Button
                 className="h-fit w-fit p-0"
                 variant="ghost"
-                onClick={() => remove(index)}
+                onClick={() => handleRemove(index)}
               >
                 <CloseIcon />
               </Button>
@@ -80,7 +80,7 @@ const TaskForm: React.FC<Props> = ({ triggerModal }) => {
         />
 
         <Button type="submit" className="w-full">
-          Create Task
+          {action === 'create' ? 'Create Task' : 'Save Changes'}
         </Button>
       </form>
     </Form>

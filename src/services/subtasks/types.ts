@@ -4,6 +4,17 @@ export interface ISubtask {
   isCompleted: boolean;
 }
 
+export interface ISubtaskToCreate {
+  title: string;
+  taskId: number;
+}
+
 export interface ISubtaskBody {
-  subtasks: { title: string; taskId: number }[];
+  subtasks: ISubtaskToCreate[];
+}
+
+export interface ISubtaskBodyToUpdate {
+  title?: string;
+  isCompleted?: boolean;
+  subtaskId: number;
 }
