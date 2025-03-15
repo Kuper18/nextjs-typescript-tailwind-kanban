@@ -1,8 +1,19 @@
 import { create } from 'zustand';
 
-import { IOpenTaskModalStore } from './types';
+import { IAlertPopupStore } from './types';
 
-export const useOpenTaskModalStore = create<IOpenTaskModalStore>((set) => ({
+export const useAlertStore = create<IAlertPopupStore>((set) => ({
   isOpen: false,
-  toggleOpen: (value) => set({ isOpen: value }),
+  description: '',
+  title: '',
+  isPending: false,
+  onConfirm: () => {},
+  toggleOpen: (value) => set((state) => ({ isOpen: value ?? !state.isOpen })),
+  setAlertData: ({
+    description,
+    title,
+    onConfirm,
+  }) => set({
+    description, onConfirm, title,
+  }),
 }));

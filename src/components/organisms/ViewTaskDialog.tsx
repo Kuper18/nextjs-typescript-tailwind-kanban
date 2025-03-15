@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import {
   Dialog,
@@ -9,8 +10,11 @@ import {
   DialogTrigger,
 } from '@/components/atoms/dialog';
 import useColumns from '@/hooks/columns/use-columns';
+import TasksService from '@/services/tasks';
+import { useAlertStore } from '@/store/modal';
 import useTaskToUpdate from '@/store/tasks';
 import { IDropdownOption } from '@/types';
+import { handleErrorResponse, showNotification } from '@/utils';
 
 import { Select, SelectTrigger, SelectValue } from '../atoms/select';
 import CardTask from '../molecules/CardTask';
@@ -36,8 +40,22 @@ const ViewTaskDialog: React.FC<Props> = ({
   subtasks,
   title,
 }) => {
+  const queryClient = useQueryClient();
   const { data: columns } = useColumns();
   const { setTaskToUpdate, triggerOpenModal } = useTaskToUpdate();
+  const { toggleOpen, setAlertData } = useAlertStore();
+
+  const [isOpenTask, setIsOpenTask] = useState(false);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: TasksService.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['columns'] });
+      showNotification('success', 'Task was deleted');
+    },
+    onError: handleErrorResponse,
+    onSettled: () => toggleOpen(false),
+  });
 
   const handleUpdateTask = useCallback(() => {
     setTaskToUpdate({
@@ -48,7 +66,17 @@ const ViewTaskDialog: React.FC<Props> = ({
       title,
     });
     triggerOpenModal();
-  }, [columnId, description, id, subtasks, title]);
+  }, [columnId, description, id, setTaskToUpdate, subtasks, title, triggerOpenModal]);
+
+  const handleDelete = useCallback(() => {
+    setIsOpenTask(false);
+    setAlertData({
+      title: 'Delete this task?',
+      description: `Are you sure you want to delete the '${title}' task and its subtasks? This action cannot be reversed.`,
+      onConfirm: () => mutate(id),
+    });
+    toggleOpen();
+  }, [id, isPending, mutate, setAlertData, title, toggleOpen]);
 
   const column = columns?.find((col) => col.id === columnId);
   const options: IDropdownOption[] = useMemo(
@@ -56,22 +84,22 @@ const ViewTaskDialog: React.FC<Props> = ({
       { title: 'Edit Task', action: handleUpdateTask },
       {
         title: 'Delete Task',
-        action: () => {},
+        action: handleDelete,
         className:
           'text-destructive text-[13px] font-medium focus:text-destructive',
       },
     ],
-    [handleUpdateTask],
+    [handleUpdateTask, handleDelete],
   );
 
   return (
     <article>
-      <Dialog>
+      <Dialog open={isOpenTask} onOpenChange={setIsOpenTask}>
         <DialogTrigger className="text-left">
           <CardTask title={title} subtasks={subtasks} />
         </DialogTrigger>
 
-        <DialogContent hideCloseIcon className="gap-6">
+        <DialogContent hideCloseIcon className="z-50 gap-6">
           <DialogHeader className="flex flex-row items-center justify-between space-x-6">
             <DialogTitle className="max-w-[387px] font-bold leading-6">
               {title}

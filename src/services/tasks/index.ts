@@ -32,6 +32,18 @@ class TasksService {
       throw error;
     }
   }
+
+  static async delete(taskId: number) {
+    try {
+      const { data } = await axiosInstance.delete<{ message: string }>(
+        `/tasks/${taskId}`,
+      );
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default TasksService;
