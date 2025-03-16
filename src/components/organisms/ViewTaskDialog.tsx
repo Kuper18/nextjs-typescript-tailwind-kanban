@@ -16,10 +16,13 @@ import useTaskToUpdate from '@/store/tasks';
 import { IDropdownOption } from '@/types';
 import { handleErrorResponse, showNotification } from '@/utils';
 
+import { Button } from '../atoms/button';
 import { Select, SelectTrigger, SelectValue } from '../atoms/select';
 import CardTask from '../molecules/CardTask';
 import DropdownMenu from '../molecules/DropdownMenu';
 import Subtask from '../molecules/Subtask';
+
+import CreateTaskDialog from './CreateTaskDialog';
 
 type Props = {
   columnId: number;
@@ -47,7 +50,7 @@ const ViewTaskDialog: React.FC<Props> = ({
 
   const [isOpenTask, setIsOpenTask] = useState(false);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: TasksService.delete,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['columns'] });
@@ -66,7 +69,15 @@ const ViewTaskDialog: React.FC<Props> = ({
       title,
     });
     triggerOpenModal();
-  }, [columnId, description, id, setTaskToUpdate, subtasks, title, triggerOpenModal]);
+  }, [
+    columnId,
+    description,
+    id,
+    setTaskToUpdate,
+    subtasks,
+    title,
+    triggerOpenModal,
+  ]);
 
   const handleDelete = useCallback(() => {
     setIsOpenTask(false);
@@ -76,9 +87,10 @@ const ViewTaskDialog: React.FC<Props> = ({
       onConfirm: () => mutate(id),
     });
     toggleOpen();
-  }, [id, isPending, mutate, setAlertData, title, toggleOpen]);
+  }, [id, mutate, setAlertData, title, toggleOpen]);
 
   const column = columns?.find((col) => col.id === columnId);
+  const completedSubtasks = subtasks.filter((sub) => sub.isCompleted);
   const options: IDropdownOption[] = useMemo(
     () => [
       { title: 'Edit Task', action: handleUpdateTask },
@@ -113,7 +125,7 @@ const ViewTaskDialog: React.FC<Props> = ({
 
           <div>
             <DialogDescription className="mb-[16px] text-xs font-bold text-input-foreground">
-              {`Subtasks (1 of ${subtasks.length})`}
+              {`Subtasks (${completedSubtasks.length} of ${subtasks.length})`}
             </DialogDescription>
 
             <ul className="space-y-2">
@@ -136,6 +148,10 @@ const ViewTaskDialog: React.FC<Props> = ({
           </div>
         </DialogContent>
       </Dialog>
+
+      <CreateTaskDialog taskId={id}>
+        <Button className="sr-only">Edit Task</Button>
+      </CreateTaskDialog>
     </article>
   );
 };

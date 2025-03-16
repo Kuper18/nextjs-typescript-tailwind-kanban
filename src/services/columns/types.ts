@@ -19,3 +19,8 @@ export interface IColumnWithRelations extends IColumn {
     }[];
   }[];
 }
+
+export interface IColumnBodyToUpdate {
+  name: string;
+  columnId: number;
+}

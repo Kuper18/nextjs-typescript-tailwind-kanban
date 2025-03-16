@@ -4,3 +4,7 @@ export interface IBoard {
 }
 
 export interface IBoardBody extends Omit<IBoard, 'id'> {}
+
+export interface IBoardBodyToUpdate extends IBoardBody {
+  boardId: number;
+}

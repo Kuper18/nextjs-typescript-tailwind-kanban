@@ -43,7 +43,9 @@ const AsideMenu = () => {
                   <Link key={board.id} href={`/${board.id}`}>
                     <SidebarMenuItem>
                       <SidebarMenuButton
-                        variant={boardId === `${board.id}` ? 'active' : 'default'}
+                        variant={
+                          boardId === `${board.id}` ? 'active' : 'default'
+                        }
                         asChild
                       >
                         <span>

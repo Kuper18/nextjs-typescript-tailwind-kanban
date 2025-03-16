@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const regexNum = /^[1-9]\d*$/;
+export const regexNum = /^[1-9]\d*$/;
 
 export const newTaskSchema = z.object({
   title: z.string().min(3).max(255),

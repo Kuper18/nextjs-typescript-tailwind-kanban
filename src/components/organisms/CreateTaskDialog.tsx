@@ -14,10 +14,11 @@ import { TAction } from '@/types';
 import TaskForm from './TaskForm';
 
 type Props = {
+  taskId?: number
   children: React.ReactNode;
 };
 
-const CreateTaskDialog: React.FC<Props> = ({ children }) => {
+const CreateTaskDialog: React.FC<Props> = ({ taskId, children }) => {
   const {
     isOpenModal,
     task,
@@ -26,6 +27,7 @@ const CreateTaskDialog: React.FC<Props> = ({ children }) => {
   } = useTaskToUpdateStore();
 
   const action: TAction = task ? 'update' : 'create';
+  const shouldOpenCurrentDialog = action === 'update' && task?.id === taskId;
 
   const handleOpenChange = (value: boolean) => {
     triggerOpenModal(value);
@@ -38,8 +40,8 @@ const CreateTaskDialog: React.FC<Props> = ({ children }) => {
   return (
     <article>
       <Dialog
-        open={isOpenModal}
-        onOpenChange={(value) => handleOpenChange(value)}
+        open={shouldOpenCurrentDialog ? isOpenModal : undefined}
+        onOpenChange={shouldOpenCurrentDialog ? (value) => handleOpenChange(value) : undefined}
       >
         <DialogTrigger asChild className="text-left">
           {children}

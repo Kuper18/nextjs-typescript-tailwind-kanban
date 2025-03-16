@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import {
@@ -8,6 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/atoms/dialog';
+import useBoardToUpdateStore from '@/store/boards';
+import { TAction } from '@/types';
 
 import BoardIcon from '../atoms/icons/BoardIcon';
 import { SidebarMenuButton } from '../atoms/sidebar';
@@ -15,9 +19,29 @@ import { SidebarMenuButton } from '../atoms/sidebar';
 import BoardFrom from './BoardFrom';
 
 const CreateBoardDialog = () => {
+  const {
+    isOpenModal,
+    board,
+    resetBoardToUpdate,
+    triggerOpenModal,
+  } = useBoardToUpdateStore();
+
+  const action: TAction = board ? 'update' : 'create';
+
+  const handleOpenChange = (value: boolean) => {
+    triggerOpenModal(value);
+
+    if (board) {
+      resetBoardToUpdate();
+    }
+  };
+
   return (
     <article>
-      <Dialog>
+      <Dialog
+        open={isOpenModal}
+        onOpenChange={(value) => handleOpenChange(value)}
+      >
         <DialogTrigger asChild className="text-left">
           <SidebarMenuButton variant="outline" asChild>
             <span>
@@ -33,15 +57,17 @@ const CreateBoardDialog = () => {
         >
           <DialogHeader className="flex flex-row items-center justify-between space-x-6">
             <DialogTitle className="max-w-[387px] font-bold leading-6">
-              Add New Board
+              {action === 'create' ? 'Add New Board' : 'Edit Board'}
             </DialogTitle>
           </DialogHeader>
 
           <DialogDescription className="sr-only">
-            Input the data to create a new board
+            {action === 'create'
+              ? 'Input the data to create a new board'
+              : 'Update existing board'}
           </DialogDescription>
 
-          <BoardFrom />
+          <BoardFrom action={action} />
         </DialogContent>
       </Dialog>
     </article>

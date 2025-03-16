@@ -1,19 +1,53 @@
 'use client';
 
-import { EllipsisVertical, Plus } from 'lucide-react';
-import React from 'react';
+import { Plus } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import React, { useCallback, useMemo } from 'react';
 
+import useBoards from '@/hooks/boards/use-boards';
+import useColumns from '@/hooks/columns/use-columns';
 import { cn } from '@/lib/utils';
+import { IBoard } from '@/services/boards/types';
+import useBoardToUpdateStore from '@/store/boards';
+import { IDropdownOption } from '@/types';
 
 import { Button } from '../atoms/button';
 import Logo from '../atoms/icons/Logo';
 import { useSidebar } from '../atoms/sidebar';
+import DropdownMenu from '../molecules/DropdownMenu';
 
 import CreateTaskDialog from './CreateTaskDialog';
 import MobileMenu from './MobileMenu';
 
 const Header = () => {
   const { open } = useSidebar();
+  const { data: boards } = useBoards();
+  const { data: columns } = useColumns();
+  const { boardId } = useParams<{ boardId: string }>();
+  const { setBoardToUpdate, triggerOpenModal } = useBoardToUpdateStore();
+
+  const board = boards?.find((board) => board.id === Number(boardId));
+
+  const handleUpdateBoard = useCallback(() => {
+    setBoardToUpdate({
+      ...(board as IBoard),
+      columns: columns ?? [],
+    });
+    triggerOpenModal();
+  }, [board, columns, setBoardToUpdate, triggerOpenModal]);
+
+  const options: IDropdownOption[] = useMemo(
+    () => [
+      { title: 'Edit Board', action: handleUpdateBoard },
+      {
+        title: 'Delete Board',
+        action: () => {},
+        className:
+          'text-destructive text-[13px] font-medium focus:text-destructive',
+      },
+    ],
+    [handleUpdateBoard],
+  );
 
   return (
     <header
@@ -38,7 +72,7 @@ const Header = () => {
 
       <div className="-ml-[1px] flex h-full w-full items-center justify-between pl-[16px] pr-[16px] sm:border-b-[1px] sm:border-l-[1px] sm:pl-6 sm:pr-6 lg:pr-8">
         <h2 className="hidden w-fit text-lg font-bold sm:inline-flex sm:text-xl lg:text-heading-xl">
-          Platform Launch
+          {board?.name}
         </h2>
 
         <MobileMenu />
@@ -50,7 +84,13 @@ const Header = () => {
               <span className="hidden sm:inline">Add New Task</span>
             </Button>
           </CreateTaskDialog>
-          <EllipsisVertical className="cursor-pointer text-secondary-foreground" />
+          <DropdownMenu
+            modal={false}
+            align="end"
+            side="bottom"
+            sideOffset={20}
+            options={options}
+          />
         </div>
       </div>
     </header>

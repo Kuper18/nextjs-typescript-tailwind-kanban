@@ -2,21 +2,26 @@ import { Plus } from 'lucide-react';
 import React from 'react';
 
 import useBoardsForm from '@/hooks/boards/use-boards-form';
+import { TAction } from '@/types';
 
 import { Button } from '../atoms/button';
 import { Form, FormLabel } from '../atoms/form';
 import CloseIcon from '../atoms/icons/CloseIcon';
 import FormInput from '../molecules/FormInput';
 
-const BoardFrom = () => {
+type Props = {
+  action: TAction
+}
+
+const BoardFrom: React.FC<Props> = ({ action }) => {
   const {
     isLoading,
     form,
     fields,
     append,
     handleSubmit,
-    remove,
-  } = useBoardsForm();
+    handleRemove,
+  } = useBoardsForm(action);
 
   return (
     <Form {...form}>
@@ -43,7 +48,7 @@ const BoardFrom = () => {
               <Button
                 className="h-fit w-fit p-0"
                 variant="ghost"
-                onClick={() => remove(index)}
+                onClick={() => handleRemove(index)}
               >
                 <CloseIcon />
               </Button>
@@ -67,7 +72,7 @@ const BoardFrom = () => {
           type="submit"
           className="w-full"
         >
-          Create New Board
+          {action === 'create' ? 'Create New Board' : 'Save Changes'}
         </Button>
       </form>
     </Form>

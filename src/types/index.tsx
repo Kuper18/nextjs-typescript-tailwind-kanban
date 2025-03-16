@@ -2,7 +2,10 @@ import { QueryClient, UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 
+import { newBoardSchema } from '@/schemas/board';
 import { newTaskSchema } from '@/schemas/task';
+import { IBoard } from '@/services/boards/types';
+import { IColumn, IColumnBody } from '@/services/columns/types';
 import {
   ISubtask,
   ISubtaskBody,
@@ -23,6 +26,11 @@ export interface IDropdownOption {
 
 export interface ISubtaskFromForm {
   subtaskTitle: string;
+  id?: string;
+}
+
+export interface IColumnFromForm {
+  name: string;
   id?: string;
 }
 
@@ -55,8 +63,22 @@ export interface IUpdateTaskSuccess extends ICreateTaskSuccess {
   >;
 }
 
+export interface ICreateBoardSuccess {
+  board: IBoard;
+  columns: IColumnFromForm[];
+  mutateAsyncAdd: UseMutateAsyncFunction<
+    IColumn,
+    AxiosError<unknown, any>,
+    IColumnBody,
+    unknown
+  >;
+  queryClient: QueryClient;
+  triggerOpenModal: () => void;
+}
+
 export type TNotificationType = 'error' | 'success' | 'info' | 'warning';
 
 export type TAction = 'create' | 'update';
 
 export type TTaskFormData = z.infer<typeof newTaskSchema>;
+export type TBoardFormData = z.infer<typeof newBoardSchema>;

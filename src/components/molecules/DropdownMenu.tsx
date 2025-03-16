@@ -11,16 +11,27 @@ import { IDropdownOption } from '@/types';
 
 type Props = {
   options: IDropdownOption[];
+  side?: 'bottom' | 'top' | 'right' | 'left';
+  align?: 'center' | 'end' | 'start';
+  sideOffset?: number;
+  modal?: boolean
 };
 
-const DropdownMenu = ({ options }: Props) => {
+const DropdownMenu = ({
+  options, side, align, sideOffset, modal = true,
+}: Props) => {
   return (
-    <DropdownMenuAtom>
+    <DropdownMenuAtom modal={modal}>
       <DropdownMenuTrigger asChild>
         <EllipsisVertical className="shrink-0 cursor-pointer text-secondary-foreground" />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-[192px] border-none">
+      <DropdownMenuContent
+        side={side}
+        align={align}
+        sideOffset={sideOffset}
+        className="w-[192px] border-none"
+      >
         {options.map(({ title, action, className }) => (
           <DropdownMenuItem className={className} onClick={action} key={title}>
             {title}
