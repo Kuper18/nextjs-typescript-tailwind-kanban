@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { newBoardSchema } from '@/schemas/board';
 import { newTaskSchema } from '@/schemas/task';
 import { IBoard } from '@/services/boards/types';
-import { IColumn, IColumnBody } from '@/services/columns/types';
+import { IColumn, IColumnBody, IColumnBodyToUpdate } from '@/services/columns/types';
 import {
   ISubtask,
   ISubtaskBody,
@@ -74,6 +74,22 @@ export interface ICreateBoardSuccess {
   >;
   queryClient: QueryClient;
   triggerOpenModal: () => void;
+}
+
+export interface IUpdateBoardSuccess extends ICreateBoardSuccess {
+  columnsIdsToDelete: string[];
+  mutateAsyncDelete: UseMutateAsyncFunction<
+    { message: string },
+    AxiosError<unknown, any>,
+    string | number,
+    unknown
+  >;
+  mutateAsyncUpdate: UseMutateAsyncFunction<
+    IColumn,
+    AxiosError<unknown, any>,
+    IColumnBodyToUpdate,
+    unknown
+  >;
 }
 
 export type TNotificationType = 'error' | 'success' | 'info' | 'warning';

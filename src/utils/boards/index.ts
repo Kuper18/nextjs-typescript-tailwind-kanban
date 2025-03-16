@@ -1,6 +1,11 @@
 import { IBoard } from '@/services/boards/types';
+import { IColumn } from '@/services/columns/types';
 import { IBoardToUpdate } from '@/store/boards/types';
-import { ICreateBoardSuccess, TBoardFormData } from '@/types';
+import {
+  ICreateBoardSuccess,
+  IUpdateBoardSuccess,
+  TBoardFormData,
+} from '@/types';
 
 import { showNotification } from '..';
 
@@ -48,4 +53,68 @@ export const handleBoardCreationSuccess = async ({
 
   triggerOpenModal();
   showNotification('success', 'New board is created');
+};
+
+export const handleBoardUpdateSuccess = async ({
+  board,
+  columns,
+  columnsIdsToDelete,
+  queryClient,
+  mutateAsyncAdd,
+  mutateAsyncDelete,
+  mutateAsyncUpdate,
+  triggerOpenModal,
+}: IUpdateBoardSuccess) => {
+  const { toUpdate, toCreate } = columns.reduce<{
+    toUpdate: Promise<IColumn>[];
+    toCreate: Promise<IColumn>[];
+  }>(
+    (acc, curr) => {
+      if (curr.id) {
+        acc.toUpdate.push(
+          mutateAsyncUpdate({
+            name: curr.name,
+            columnId: Number(curr.id),
+          }),
+        );
+      } else {
+        acc.toCreate.push(
+          mutateAsyncAdd({
+            name: curr.name,
+            boardId: board.id,
+          }),
+        );
+      }
+      return acc;
+    },
+    { toUpdate: [], toCreate: [] },
+  );
+
+  try {
+    await Promise.all(toUpdate);
+
+    if (toCreate.length) {
+      await Promise.all(toCreate);
+    }
+  } catch (error) {
+    console.error('Failed to update subtasks:', error);
+  }
+
+  if (columnsIdsToDelete.length) {
+    const columnToDeletePomises = columnsIdsToDelete.map((id) => mutateAsyncDelete(id));
+
+    try {
+      await Promise.all(columnToDeletePomises);
+    } catch (error) {
+      console.error('Failed to delete subtasks:', error);
+    }
+  }
+
+  queryClient.setQueryData(['boards'], (oldData: IBoard[] | undefined) => {
+    return oldData
+      ? [...oldData.filter((b) => b.id !== board.id), board]
+      : [board];
+  });
+  queryClient.invalidateQueries({ queryKey: ['columns'] });
+  triggerOpenModal();
 };
