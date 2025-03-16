@@ -16,7 +16,10 @@ const buttonVariants = cva(
           'bg-destructive text-destructive-foreground hover:bg-destructive-hover',
         outline:
           'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
-        secondary: 'bg-accent-secondary text-accent hover:bg-accent-hover-secondary',
+        secondary:
+          'bg-accent-secondary text-accent hover:bg-accent-hover-secondary',
+        primary:
+          'bg-linear-gradient-start text-secondary-foreground rounded-lg text-2xl font-bold hover:bg-linear-gradient-start',
         ghost: 'hover:bg-backround hover:text-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
@@ -63,7 +66,7 @@ const Button = React.forwardRef<
         ref={ref}
         {...props}
       >
-        {isLoading ? <Spinner className="border-[2px] h-6 w-6" /> : children}
+        {isLoading ? <Spinner className="h-6 w-6 border-[2px]" /> : children}
       </Comp>
     );
   },

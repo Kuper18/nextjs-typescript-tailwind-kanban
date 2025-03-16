@@ -8,13 +8,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/atoms/dialog';
+import useColumns from '@/hooks/columns/use-columns';
 import useTaskToUpdateStore from '@/store/tasks';
 import { TAction } from '@/types';
 
 import TaskForm from './TaskForm';
 
 type Props = {
-  taskId?: number
+  taskId?: number;
   children: React.ReactNode;
 };
 
@@ -25,6 +26,7 @@ const CreateTaskDialog: React.FC<Props> = ({ taskId, children }) => {
     triggerOpenModal,
     resetTaskToUpdate,
   } = useTaskToUpdateStore();
+  const { data: columns } = useColumns();
 
   const action: TAction = task ? 'update' : 'create';
   const shouldOpenCurrentDialog = action === 'update' && task?.id === taskId;
@@ -41,9 +43,17 @@ const CreateTaskDialog: React.FC<Props> = ({ taskId, children }) => {
     <article>
       <Dialog
         open={shouldOpenCurrentDialog ? isOpenModal : undefined}
-        onOpenChange={shouldOpenCurrentDialog ? (value) => handleOpenChange(value) : undefined}
+        onOpenChange={
+          shouldOpenCurrentDialog
+            ? (value) => handleOpenChange(value)
+            : undefined
+        }
       >
-        <DialogTrigger asChild className="text-left">
+        <DialogTrigger
+          disabled={!columns?.length}
+          asChild
+          className="text-left"
+        >
           {children}
         </DialogTrigger>
 
@@ -58,7 +68,9 @@ const CreateTaskDialog: React.FC<Props> = ({ taskId, children }) => {
           </DialogHeader>
 
           <DialogDescription className="sr-only">
-            Input the data to create a new task for the column
+            {action === 'create'
+              ? 'Input data to create a new task for the column'
+              : 'Change data to update the task'}
           </DialogDescription>
 
           <TaskForm action={action} />

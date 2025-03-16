@@ -54,11 +54,11 @@ export default {
         'check-box-foreground': 'hsl(var(--check-box-foreground))',
         placeholder: 'hsl(var(--placeholder))',
         chart: {
-          '1': 'hsl(var(--chart-1))',
-          '2': 'hsl(var(--chart-2))',
-          '3': 'hsl(var(--chart-3))',
-          '4': 'hsl(var(--chart-4))',
-          '5': 'hsl(var(--chart-5))',
+          1: 'hsl(var(--chart-1))',
+          2: 'hsl(var(--chart-2))',
+          3: 'hsl(var(--chart-3))',
+          4: 'hsl(var(--chart-4))',
+          5: 'hsl(var(--chart-5))',
         },
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',
@@ -71,6 +71,7 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
         shadow: 'hsl(var(--shadow))',
+        'linear-gradient-start': 'hsl(var(--linear-gradient-start))',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -86,8 +87,8 @@ export default {
         'body-m': ['12px', { lineHeight: '15px', fontWeight: '700' }],
       },
       boxShadow: {
-        custom: '0px 4px 6px 0px hsla(var(--shadow))'
-      }
+        custom: '0px 4px 6px 0px hsla(var(--shadow))',
+      },
     },
   },
   // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports
