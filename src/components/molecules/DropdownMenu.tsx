@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/atoms/dropdown-menu';
+import { cn } from '@/lib/utils';
 import { IDropdownOption } from '@/types';
 
 type Props = {
@@ -14,16 +15,27 @@ type Props = {
   side?: 'bottom' | 'top' | 'right' | 'left';
   align?: 'center' | 'end' | 'start';
   sideOffset?: number;
-  modal?: boolean
+  modal?: boolean;
+  disabled?: boolean;
 };
 
 const DropdownMenu = ({
-  options, side, align, sideOffset, modal = true,
+  options,
+  side,
+  align,
+  sideOffset,
+  disabled,
+  modal = true,
 }: Props) => {
   return (
     <DropdownMenuAtom modal={modal}>
-      <DropdownMenuTrigger asChild>
-        <EllipsisVertical className="shrink-0 cursor-pointer text-secondary-foreground" />
+      <DropdownMenuTrigger disabled={disabled} asChild>
+        <EllipsisVertical
+          className={cn(
+            'shrink-0 cursor-pointer text-secondary-foreground',
+            disabled ? 'cursor-default' : undefined,
+          )}
+        />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent

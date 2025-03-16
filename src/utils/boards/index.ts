@@ -52,7 +52,7 @@ export const handleBoardCreationSuccess = async ({
   }
 
   triggerOpenModal();
-  showNotification('success', 'New board is created');
+  showNotification('success', 'New board was created');
 };
 
 export const handleBoardUpdateSuccess = async ({
@@ -117,4 +117,5 @@ export const handleBoardUpdateSuccess = async ({
   });
   queryClient.invalidateQueries({ queryKey: ['columns'] });
   triggerOpenModal();
+  showNotification('success', 'Board was updated');
 };

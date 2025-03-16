@@ -24,8 +24,6 @@ type Props = {
 };
 
 const Column: React.FC<Props> = ({ id, name, tasks }) => {
-  // const { data: tasks } = useTasks(id);
-
   return (
     <section className="w-[280px] flex-shrink-0">
       <ScrollArea className="h-[calc(100vh-156px)]">

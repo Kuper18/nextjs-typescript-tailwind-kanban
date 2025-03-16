@@ -8,7 +8,7 @@ const useColumns = () => {
 
   return useQuery({
     queryKey: ['columns', boardId],
-    queryFn: async () => ColumnsService.get(boardId),
+    queryFn: boardId ? async () => ColumnsService.get(boardId) : undefined,
     staleTime: 60 * 5 * 1000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
