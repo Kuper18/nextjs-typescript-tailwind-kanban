@@ -1,3 +1,5 @@
+import { useDraggable } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useMemo, useState } from 'react';
 
@@ -44,6 +46,12 @@ const ViewTaskDialog: React.FC<Props> = ({
   title,
 }) => {
   const queryClient = useQueryClient();
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
+
+  const style = {
+    transform: `${CSS.Translate.toString(transform)} rotate(3deg)`,
+  };
+
   const { data: columns } = useColumns();
   const { setTaskToUpdate, triggerOpenModal } = useTaskToUpdate();
   const { toggleOpen, setAlertData } = useAlertStore();
@@ -105,10 +113,15 @@ const ViewTaskDialog: React.FC<Props> = ({
   );
 
   return (
-    <article>
+    <article style={style} ref={setNodeRef}>
       <Dialog open={isOpenTask} onOpenChange={setIsOpenTask}>
         <DialogTrigger className="text-left">
-          <CardTask title={title} subtasks={subtasks} />
+          <CardTask
+            attributes={attributes}
+            listeners={listeners}
+            title={title}
+            subtasks={subtasks}
+          />
         </DialogTrigger>
 
         <DialogContent hideCloseIcon className="z-50 gap-6">

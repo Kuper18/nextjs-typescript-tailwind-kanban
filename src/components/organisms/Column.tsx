@@ -1,5 +1,8 @@
+import { useDndMonitor, useDroppable } from '@dnd-kit/core';
 import { Plus } from 'lucide-react';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
+
+import { cn } from '@/lib/utils';
 
 import { Button } from '../atoms/button';
 import DotColor from '../atoms/dot-color';
@@ -24,9 +27,24 @@ type Props = {
 };
 
 const Column: React.FC<Props> = ({ id, name, tasks }) => {
-  return (
-    <section className="w-[280px] flex-shrink-0">
-      <ScrollArea className="h-[calc(100vh-156px)]">
+  const { setNodeRef } = useDroppable({ id });
+  const [isDragging, setIsDragging] = useState(false);
+
+  useDndMonitor({
+    onDragStart() {
+      setIsDragging(true);
+    },
+    onDragEnd() {
+      setIsDragging(false);
+    },
+    onDragCancel() {
+      setIsDragging(false);
+    },
+  });
+
+  const elements = useMemo(
+    () => (
+      <>
         <h3 className="mb-6 flex items-center gap-3 text-heading-s text-secondary-foreground">
           <DotColor />
           {name}
@@ -45,8 +63,23 @@ const Column: React.FC<Props> = ({ id, name, tasks }) => {
             </CreateTaskDialog>
           )}
         </div>
-      </ScrollArea>
-    </section>
+      </>
+    ),
+    [id, name, tasks],
+  );
+
+  return (
+    <div ref={setNodeRef}>
+      <section className="w-[280px] flex-shrink-0">
+        {isDragging ? (
+          elements
+        ) : (
+          <ScrollArea className={cn('h-[calc(100vh-156px)] w-[290px]')}>
+            {elements}
+          </ScrollArea>
+        )}
+      </section>
+    </div>
   );
 };
 
