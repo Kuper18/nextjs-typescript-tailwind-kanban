@@ -79,6 +79,7 @@ export interface ICreateBoardSuccess {
 
 export interface IUpdateBoardSuccess extends ICreateBoardSuccess {
   columnsIdsToDelete: string[];
+  resetBoardToUpdate: () => void;
   mutateAsyncDelete: UseMutateAsyncFunction<
     { message: string },
     AxiosError<unknown, any>,

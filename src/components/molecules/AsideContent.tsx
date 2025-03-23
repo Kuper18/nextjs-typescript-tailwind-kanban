@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 import useBoards from '@/hooks/boards/use-boards';
+import useOpenModal from '@/hooks/use-open-modal';
 
 import BoardIcon from '../atoms/icons/BoardIcon';
 import {
@@ -15,6 +16,7 @@ import CreateBoardDialog from '../organisms/CreateBoardDialog';
 const AsideMobileContent = () => {
   const { data: boards } = useBoards();
   const { boardId } = useParams<{ boardId: string }>();
+  const { isOpen, toggleOpen } = useOpenModal();
 
   return (
     <SidebarMenu className="w-[240px]">
@@ -35,7 +37,11 @@ const AsideMobileContent = () => {
       ))}
 
       <SidebarMenuItem>
-        <CreateBoardDialog />
+        <CreateBoardDialog
+          toggleOpen={toggleOpen}
+          isOpen={isOpen}
+          action="create"
+        />
       </SidebarMenuItem>
     </SidebarMenu>
   );

@@ -15,9 +15,9 @@ import {
 
 import useColumnMutation from '../columns/use-column-mutation';
 
-const useBoardsForm = (action: TAction) => {
+const useBoardsForm = (action: TAction, toggleOpen?: (val: boolean) => void) => {
   const queryClient = useQueryClient();
-  const { board, triggerOpenModal } = useBoardToUpdateStore();
+  const { board, triggerOpenModal, resetBoardToUpdate } = useBoardToUpdateStore();
   const { columnsMutation } = useColumnMutation();
   const form = useForm<TBoardFormData>({
     resolver: zodResolver(newBoardSchema),
@@ -46,7 +46,7 @@ const useBoardsForm = (action: TAction) => {
       board: createdBoard,
       columns: form.getValues('columns'),
       queryClient,
-      triggerOpenModal,
+      triggerOpenModal: () => toggleOpen?.(false),
       mutateAsyncAdd: columnsMutation.add.mutateAsync,
     }),
   });
@@ -58,6 +58,7 @@ const useBoardsForm = (action: TAction) => {
       columns: form.getValues('columns'),
       queryClient,
       columnsIdsToDelete,
+      resetBoardToUpdate,
       triggerOpenModal,
       mutateAsyncAdd: columnsMutation.add.mutateAsync,
       mutateAsyncDelete: columnsMutation.delete.mutateAsync,

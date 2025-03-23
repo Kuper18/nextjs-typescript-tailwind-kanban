@@ -19,11 +19,19 @@ import { SidebarMenuButton } from '../atoms/sidebar';
 
 import BoardFrom from './BoardFrom';
 
-const CreateBoardDialog = () => {
-  const { isOpenModal, board, resetBoardToUpdate, triggerOpenModal } =
-    useBoardToUpdateStore();
+type Props = {
+  action: TAction;
+  isOpen?: boolean;
+  toggleOpen?: (val: boolean) => void;
+};
 
-  const action: TAction = board ? 'update' : 'create';
+const CreateBoardDialog: React.FC<Props> = ({ action, isOpen, toggleOpen }) => {
+  const {
+    isOpenModal,
+    board,
+    resetBoardToUpdate,
+    triggerOpenModal,
+  } = useBoardToUpdateStore();
 
   const handleOpenChange = (value: boolean) => {
     triggerOpenModal(value);
@@ -36,8 +44,12 @@ const CreateBoardDialog = () => {
   return (
     <article>
       <Dialog
-        open={isOpenModal}
-        onOpenChange={(value) => handleOpenChange(value)}
+        open={board?.id && action === 'update' ? isOpenModal : isOpen}
+        onOpenChange={
+          board?.id && action === 'update'
+            ? (value) => handleOpenChange(value)
+            : (value) => toggleOpen?.(value)
+        }
       >
         <DialogTrigger asChild className="text-left">
           <SidebarMenuButton variant="outline" asChild>
@@ -62,7 +74,7 @@ const CreateBoardDialog = () => {
                 : 'Update existing board'}
             </DialogDescription>
 
-            <BoardFrom action={action} />
+            <BoardFrom toggleOpen={toggleOpen} action={action} />
           </ScrollArea>
         </DialogContent>
       </Dialog>

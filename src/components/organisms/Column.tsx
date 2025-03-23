@@ -1,9 +1,8 @@
 import { useDndMonitor, useDroppable } from '@dnd-kit/core';
 import { Plus } from 'lucide-react';
-import React, {
-  Fragment, useCallback, useMemo, useState,
-} from 'react';
+import React, { Fragment, useMemo, useState } from 'react';
 
+import useOpenModal from '@/hooks/use-open-modal';
 import { cn } from '@/lib/utils';
 
 import { Button } from '../atoms/button';
@@ -31,9 +30,7 @@ type Props = {
 const Column: React.FC<Props> = ({ id, name, tasks }) => {
   const { setNodeRef } = useDroppable({ id });
   const [isDragging, setIsDragging] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleModal = useCallback((val: boolean) => setIsOpen(val), []);
+  const { isOpen, toggleOpen } = useOpenModal();
 
   useDndMonitor({
     onDragStart() {
@@ -65,7 +62,7 @@ const Column: React.FC<Props> = ({ id, name, tasks }) => {
               </Fragment>
             ))
           ) : (
-            <CreateTaskDialog toggleModal={toggleModal} open={isOpen}>
+            <CreateTaskDialog toggleModal={toggleOpen} open={isOpen}>
               <Button className="flex min-h-[89px] w-[280px] flex-col rounded-lg bg-background text-secondary-foreground shadow-custom hover:bg-background">
                 Add New Task
                 <Plus />
@@ -75,7 +72,7 @@ const Column: React.FC<Props> = ({ id, name, tasks }) => {
         </div>
       </>
     ),
-    [id, name, tasks, toggleModal, isOpen],
+    [id, name, tasks, toggleOpen, isOpen],
   );
 
   return (

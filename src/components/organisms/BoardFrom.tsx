@@ -11,9 +11,10 @@ import FormInput from '../molecules/FormInput';
 
 type Props = {
   action: TAction
+  toggleOpen?: (val: boolean) => void
 }
 
-const BoardFrom: React.FC<Props> = ({ action }) => {
+const BoardFrom: React.FC<Props> = ({ action, toggleOpen }) => {
   const {
     isLoading,
     form,
@@ -21,7 +22,7 @@ const BoardFrom: React.FC<Props> = ({ action }) => {
     append,
     handleSubmit,
     handleRemove,
-  } = useBoardsForm(action);
+  } = useBoardsForm(action, toggleOpen);
 
   return (
     <Form {...form}>

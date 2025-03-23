@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { Button } from '../atoms/button';
 
 import BoardDropDownMenu from './BoardDropDownMenu';
+import CreateBoardDialog from './CreateBoardDialog';
 import CreateTaskDialog from './CreateTaskDialog';
 
 const BoardActions = () => {
@@ -21,6 +22,10 @@ const BoardActions = () => {
       </CreateTaskDialog>
 
       <BoardDropDownMenu />
+
+      <div className="hidden">
+        <CreateBoardDialog action="update" />
+      </div>
     </div>
   );
 };

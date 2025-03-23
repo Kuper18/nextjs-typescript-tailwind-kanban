@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 import useBoards from '@/hooks/boards/use-boards';
+import useOpenModal from '@/hooks/use-open-modal';
 
 import BoardIcon from '../atoms/icons/BoardIcon';
 import { ScrollArea } from '../atoms/scroll-area';
@@ -27,6 +28,7 @@ import CreateBoardDialog from './CreateBoardDialog';
 const AsideMenu = () => {
   const { boardId } = useParams();
   const { data: boards } = useBoards();
+  const { isOpen, toggleOpen } = useOpenModal();
 
   return (
     <Sidebar className="pt-16 sm:pt-[81px] lg:pt-24">
@@ -58,7 +60,11 @@ const AsideMenu = () => {
                 ))}
 
                 <SidebarMenuItem>
-                  <CreateBoardDialog />
+                  <CreateBoardDialog
+                    toggleOpen={toggleOpen}
+                    isOpen={isOpen}
+                    action="create"
+                  />
                 </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>

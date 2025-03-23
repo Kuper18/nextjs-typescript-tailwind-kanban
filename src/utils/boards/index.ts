@@ -60,6 +60,7 @@ export const handleBoardUpdateSuccess = async ({
   columns,
   columnsIdsToDelete,
   queryClient,
+  resetBoardToUpdate,
   mutateAsyncAdd,
   mutateAsyncDelete,
   mutateAsyncUpdate,
@@ -118,4 +119,5 @@ export const handleBoardUpdateSuccess = async ({
   queryClient.invalidateQueries({ queryKey: ['columns'] });
   triggerOpenModal();
   showNotification('success', 'Board was updated');
+  resetBoardToUpdate();
 };
