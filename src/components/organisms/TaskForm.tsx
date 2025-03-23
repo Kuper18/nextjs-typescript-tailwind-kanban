@@ -13,10 +13,11 @@ import CloseIcon from '../atoms/icons/CloseIcon';
 import FormInput from '../molecules/FormInput';
 
 type Props = {
+  toggleModal?: (val: boolean) => void
   action: TAction;
 };
 
-const TaskForm: React.FC<Props> = ({ action }) => {
+const TaskForm: React.FC<Props> = ({ action, toggleModal }) => {
   const { data: columns } = useColumns();
   const {
     fields,
@@ -25,7 +26,7 @@ const TaskForm: React.FC<Props> = ({ action }) => {
     handleSubmit,
     append,
     handleRemove,
-  } = useTaskForm(action);
+  } = useTaskForm(action, toggleModal);
 
   return (
     <Form {...form}>

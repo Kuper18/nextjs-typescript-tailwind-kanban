@@ -16,7 +16,7 @@ import {
 
 import useSubtaskMutation from '../subtasks/use-subtask-mutation';
 
-const useTaskForm = (action: TAction) => {
+const useTaskForm = (action: TAction, toggleModal?: (val: boolean) => void) => {
   const queryClient = useQueryClient();
   const { triggerOpenModal, task } = useTaskToUpdateStore();
   const { subtaskMutation } = useSubtaskMutation();
@@ -50,7 +50,7 @@ const useTaskForm = (action: TAction) => {
       task: createdTask,
       queryClient,
       subtasks: form.getValues('subtasks'),
-      triggerOpenModal,
+      triggerOpenModal: () => toggleModal?.(false),
       mutateAsyncAdd: subtaskMutation.add.mutateAsync,
     }),
     onError: handleErrorResponse,

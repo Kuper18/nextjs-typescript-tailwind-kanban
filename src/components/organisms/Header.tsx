@@ -1,18 +1,15 @@
 'use client';
 
-import { Plus } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React from 'react';
 
 import useBoards from '@/hooks/boards/use-boards';
 import { cn } from '@/lib/utils';
 
-import { Button } from '../atoms/button';
 import Logo from '../atoms/icons/Logo';
 import { useSidebar } from '../atoms/sidebar';
 
-import BoardDropDownMenu from './BoardDropDownMenu';
-import CreateTaskDialog from './CreateTaskDialog';
+import BoardActions from './BoardActions';
 import MobileMenu from './MobileMenu';
 
 const Header = () => {
@@ -50,16 +47,7 @@ const Header = () => {
 
         <MobileMenu />
 
-        <div className="flex items-center space-x-[16px] sm:space-x-6">
-          <CreateTaskDialog>
-            <Button size="lg" className="w-12 sm:w-[164px]">
-              <Plus className="h-3 w-3" />
-              <span className="hidden sm:inline">Add New Task</span>
-            </Button>
-          </CreateTaskDialog>
-
-          <BoardDropDownMenu />
-        </div>
+        <BoardActions />
       </div>
     </header>
   );

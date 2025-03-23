@@ -18,13 +18,10 @@ import useTaskToUpdate from '@/store/tasks';
 import { IDropdownOption } from '@/types';
 import { handleErrorResponse, showNotification } from '@/utils';
 
-import { Button } from '../atoms/button';
 import { Select, SelectTrigger, SelectValue } from '../atoms/select';
 import CardTask from '../molecules/CardTask';
 import DropdownMenu from '../molecules/DropdownMenu';
 import Subtask from '../molecules/Subtask';
-
-import CreateTaskDialog from './CreateTaskDialog';
 
 type Props = {
   columnId: number;
@@ -46,7 +43,9 @@ const ViewTaskDialog: React.FC<Props> = ({
   title,
 }) => {
   const queryClient = useQueryClient();
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
+  const {
+    attributes, listeners, setNodeRef, transform,
+  } = useDraggable({ id });
 
   const style = {
     transform: `${CSS.Translate.toString(transform)} rotate(3deg)`,
@@ -76,6 +75,7 @@ const ViewTaskDialog: React.FC<Props> = ({
       status: columnId,
       title,
     });
+    setIsOpenTask(false);
     triggerOpenModal();
   }, [
     columnId,
@@ -161,10 +161,6 @@ const ViewTaskDialog: React.FC<Props> = ({
           </div>
         </DialogContent>
       </Dialog>
-
-      <CreateTaskDialog taskId={id}>
-        <Button className="sr-only">Edit Task</Button>
-      </CreateTaskDialog>
     </article>
   );
 };

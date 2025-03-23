@@ -15,16 +15,20 @@ import { TAction } from '@/types';
 import TaskForm from './TaskForm';
 
 type Props = {
+  open?: boolean;
+  toggleModal?: (val: boolean) => void;
   taskId?: number;
   children: React.ReactNode;
 };
 
-const CreateTaskDialog: React.FC<Props> = ({ taskId, children }) => {
+const CreateTaskDialog: React.FC<Props> = ({
+  taskId,
+  children,
+  open,
+  toggleModal,
+}) => {
   const {
-    isOpenModal,
-    task,
-    triggerOpenModal,
-    resetTaskToUpdate,
+    isOpenModal, task, triggerOpenModal, resetTaskToUpdate,
   } = useTaskToUpdateStore();
   const { data: columns } = useColumns();
 
@@ -42,12 +46,9 @@ const CreateTaskDialog: React.FC<Props> = ({ taskId, children }) => {
   return (
     <article>
       <Dialog
-        open={shouldOpenCurrentDialog ? isOpenModal : undefined}
-        onOpenChange={
-          shouldOpenCurrentDialog
-            ? (value) => handleOpenChange(value)
-            : undefined
-        }
+        open={open ?? (shouldOpenCurrentDialog ? isOpenModal : undefined)}
+        onOpenChange={(value) => toggleModal?.(value)
+          ?? (shouldOpenCurrentDialog ? handleOpenChange(value) : undefined)}
       >
         <DialogTrigger
           disabled={!columns?.length}
@@ -73,7 +74,7 @@ const CreateTaskDialog: React.FC<Props> = ({ taskId, children }) => {
               : 'Change data to update the task'}
           </DialogDescription>
 
-          <TaskForm action={action} />
+          <TaskForm toggleModal={toggleModal} action={action} />
         </DialogContent>
       </Dialog>
     </article>
