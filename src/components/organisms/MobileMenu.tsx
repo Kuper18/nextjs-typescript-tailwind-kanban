@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../atoms/dialog';
-import { ScrollArea, ScrollBar } from '../atoms/scroll-area';
+import { ScrollArea } from '../atoms/scroll-area';
 import AsideContent from '../molecules/AsideContent';
 import ToggleThemeButton from '../molecules/ToggleThemeButton';
 

@@ -27,7 +27,7 @@ const CardTask: React.FC<Props> = ({
   return (
     <Card className="w-[280px] border-none px-[16px] py-[23px] shadow-custom">
       <h3 className="mb-2 flex justify-between text-heading-m leading-5">
-        <span className="max-w-[248px]">{title}</span>
+        <span className="max-w-[248px] truncate">{title}</span>
         <GripVertical
           className="shrink-0 cursor-grab text-secondary-foreground"
           {...listeners}

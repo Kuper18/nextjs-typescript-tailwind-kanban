@@ -18,6 +18,7 @@ import useTaskToUpdate from '@/store/tasks';
 import { IDropdownOption } from '@/types';
 import { handleErrorResponse, showNotification } from '@/utils';
 
+import { ScrollArea } from '../atoms/scroll-area';
 import { Select, SelectTrigger, SelectValue } from '../atoms/select';
 import CardTask from '../molecules/CardTask';
 import DropdownMenu from '../molecules/DropdownMenu';
@@ -124,41 +125,43 @@ const ViewTaskDialog: React.FC<Props> = ({
           />
         </DialogTrigger>
 
-        <DialogContent hideCloseIcon className="z-50 gap-6">
-          <DialogHeader className="flex flex-row items-center justify-between space-x-6">
-            <DialogTitle className="max-w-[387px] font-bold leading-6">
-              {title}
-            </DialogTitle>
-            <DropdownMenu options={options} />
-          </DialogHeader>
+        <DialogContent hideCloseIcon className="z-50 gap-6 p-0 sm:p-0">
+          <ScrollArea className="max-h-[80vh] p-6 sm:p-8">
+            <DialogHeader className="flex flex-row items-center justify-between space-x-6">
+              <DialogTitle className="max-w-[387px] truncate font-bold leading-6">
+                {title}
+              </DialogTitle>
+              <DropdownMenu options={options} />
+            </DialogHeader>
 
-          <DialogDescription className="text-[13px] font-medium text-input-foreground">
-            {description}
-          </DialogDescription>
-
-          <div>
-            <DialogDescription className="mb-[16px] text-xs font-bold text-input-foreground">
-              {`Subtasks (${completedSubtasks.length} of ${subtasks.length})`}
+            <DialogDescription className="text-[13px] font-medium text-input-foreground">
+              {description}
             </DialogDescription>
 
-            <ul className="space-y-2">
-              {subtasks.map((item) => (
-                <Subtask {...item} key={item.id} />
-              ))}
-            </ul>
-          </div>
+            <div>
+              <DialogDescription className="mb-[16px] text-xs font-bold text-input-foreground">
+                {`Subtasks (${completedSubtasks.length} of ${subtasks.length})`}
+              </DialogDescription>
 
-          <div>
-            <p className="mb-2 text-xs font-bold text-input-foreground">
-              Current status
-            </p>
+              <ul className="space-y-2">
+                {subtasks.map((item) => (
+                  <Subtask {...item} key={item.id} />
+                ))}
+              </ul>
+            </div>
 
-            <Select>
-              <SelectTrigger className="text-body-l">
-                <SelectValue placeholder={column?.name} />
-              </SelectTrigger>
-            </Select>
-          </div>
+            <div>
+              <p className="mb-2 text-xs font-bold text-input-foreground">
+                Current status
+              </p>
+
+              <Select>
+                <SelectTrigger className="text-body-l">
+                  <SelectValue placeholder={column?.name} />
+                </SelectTrigger>
+              </Select>
+            </div>
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </article>

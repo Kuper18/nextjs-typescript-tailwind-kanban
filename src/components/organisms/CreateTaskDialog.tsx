@@ -12,6 +12,8 @@ import useColumns from '@/hooks/columns/use-columns';
 import useTaskToUpdateStore from '@/store/tasks';
 import { TAction } from '@/types';
 
+import { ScrollArea } from '../atoms/scroll-area';
+
 import TaskForm from './TaskForm';
 
 type Props = {
@@ -58,23 +60,22 @@ const CreateTaskDialog: React.FC<Props> = ({
           {children}
         </DialogTrigger>
 
-        <DialogContent
-          hideCloseIcon
-          className="max-h-[90vh] gap-6 overflow-hidden"
-        >
-          <DialogHeader className="flex flex-row items-center justify-between space-x-6">
-            <DialogTitle className="max-w-[387px] font-bold leading-6">
-              {action === 'create' ? 'Add New Task' : 'Edit Task'}
-            </DialogTitle>
-          </DialogHeader>
+        <DialogContent hideCloseIcon className="gap-6 p-0 sm:p-0">
+          <ScrollArea className="max-h-[80vh] p-6 sm:p-8">
+            <DialogHeader className="flex flex-row items-center justify-between space-x-6">
+              <DialogTitle className="max-w-[387px] font-bold leading-6">
+                {action === 'create' ? 'Add New Task' : 'Edit Task'}
+              </DialogTitle>
+            </DialogHeader>
 
-          <DialogDescription className="sr-only">
-            {action === 'create'
-              ? 'Input data to create a new task for the column'
-              : 'Change data to update the task'}
-          </DialogDescription>
+            <DialogDescription className="sr-only">
+              {action === 'create'
+                ? 'Input data to create a new task for the column'
+                : 'Change data to update the task'}
+            </DialogDescription>
 
-          <TaskForm toggleModal={toggleModal} action={action} />
+            <TaskForm toggleModal={toggleModal} action={action} />
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </article>
