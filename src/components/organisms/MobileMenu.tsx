@@ -1,8 +1,10 @@
 'use clinet';
 
 import { ChevronDown } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 
+import useBoards from '@/hooks/boards/use-boards';
 import { cn } from '@/lib/utils';
 
 import { Button } from '../atoms/button';
@@ -15,10 +17,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../atoms/dialog';
+import { ScrollArea, ScrollBar } from '../atoms/scroll-area';
 import AsideContent from '../molecules/AsideContent';
 import ToggleThemeButton from '../molecules/ToggleThemeButton';
 
 const MobileMenu = () => {
+  const { data: boards } = useBoards();
+  const { boardId } = useParams<{ boardId: string }>();
+
+  const board = boards?.find((board) => board.id === Number(boardId));
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -28,7 +36,7 @@ const MobileMenu = () => {
 
         <DialogTrigger asChild>
           <Button variant="ghost" className="h-fit p-0 text-lg font-bold">
-            Platform Launch
+            {board?.name ?? 'kanban'}
             <ChevronDown
               className={cn(
                 'stroke-accent transition-transform',
@@ -37,24 +45,25 @@ const MobileMenu = () => {
             />
           </Button>
         </DialogTrigger>
-
         <DialogContent
           hideCloseIcon
           hideOverlay
           aria-describedby={undefined}
-          className="top-[238px] w-[264px] rounded-lg border-none px-0 py-4"
+          className="top-[80px] w-[264px] translate-y-[0px] rounded-lg border-none px-0 py-4"
         >
-          <DialogHeader className="pl-6 text-left">
-            <DialogTitle className="text-sm tracking-[2.4px] text-input-foreground">
-              ALL BOARDS (3)
-            </DialogTitle>
-          </DialogHeader>
+          <ScrollArea className="max-h-[80vh] w-[264px]">
+            <DialogHeader className="pl-6 text-left">
+              <DialogTitle className="text-sm tracking-[2.4px] text-input-foreground">
+                {`ALL BOARDS (${boards?.length})`}
+              </DialogTitle>
+            </DialogHeader>
 
-          <AsideContent />
+            <AsideContent />
 
-          <DialogFooter className="w-235px mx-auto">
-            <ToggleThemeButton />
-          </DialogFooter>
+            <DialogFooter className="w-235px mx-auto">
+              <ToggleThemeButton />
+            </DialogFooter>
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </div>
