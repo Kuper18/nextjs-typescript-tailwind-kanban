@@ -18,7 +18,7 @@ import useSubtaskMutation from '../subtasks/use-subtask-mutation';
 
 const useTaskForm = (action: TAction, toggleModal?: (val: boolean) => void) => {
   const queryClient = useQueryClient();
-  const { triggerOpenModal, task } = useTaskToUpdateStore();
+  const { triggerOpenModal, resetTaskToUpdate, task } = useTaskToUpdateStore();
   const { subtaskMutation } = useSubtaskMutation();
 
   const [subtasksToDelete, setSubtasksToDelete] = useState<string[]>([]);
@@ -64,6 +64,7 @@ const useTaskForm = (action: TAction, toggleModal?: (val: boolean) => void) => {
       subtasksToDelete,
       queryClient,
       triggerOpenModal,
+      resetTaskToUpdate,
       mutateAsyncAdd: subtaskMutation.add.mutateAsync,
       mutateAsyncDelete: subtaskMutation.delete.mutateAsync,
       mutateAsyncUpdate: subtaskMutation.update.mutateAsync,

@@ -49,6 +49,7 @@ export interface ICreateTaskSuccess {
 
 export interface IUpdateTaskSuccess extends ICreateTaskSuccess {
   subtasksToDelete: string[];
+  resetTaskToUpdate: () => void;
   mutateAsyncDelete: UseMutateAsyncFunction<
     any,
     AxiosError<unknown, any>,

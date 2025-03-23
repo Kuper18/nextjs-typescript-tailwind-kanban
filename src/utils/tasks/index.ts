@@ -56,6 +56,7 @@ export const handleTaskUpdateSuccess = async ({
   subtasksToDelete,
   task,
   queryClient,
+  resetTaskToUpdate,
   mutateAsyncAdd,
   mutateAsyncDelete,
   mutateAsyncUpdate,
@@ -108,4 +109,5 @@ export const handleTaskUpdateSuccess = async ({
 
   queryClient.invalidateQueries({ queryKey: ['columns'] });
   triggerOpenModal();
+  resetTaskToUpdate();
 };
