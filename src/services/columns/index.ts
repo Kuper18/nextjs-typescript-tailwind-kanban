@@ -11,7 +11,7 @@ class ColumnsService {
   static async get(boardId: string) {
     try {
       const { data } = await axiosInstance.get<IColumnWithRelations[]>(
-        `/columns/${boardId}`,
+        `/columns/${boardId}?populate=tasks,subtasks`,
       );
 
       return data;
