@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -19,6 +20,7 @@ import {
 import { Form } from '@/components/atoms/form';
 import { loginSchema } from '@/schemas/auth';
 import authApi from '@/services/auth';
+import { handleErrorResponse } from '@/utils';
 
 import FormInput from '../molecules/FormInput';
 
@@ -34,9 +36,14 @@ const Login = () => {
     },
   });
 
-  const onSubmit = async (data: FormData) => {
-    await authApi.login(data);
-    router.push('/');
+  const { mutate, isPending } = useMutation({
+    mutationFn: authApi.login,
+    onSuccess: () => router.push('/'),
+    onError: handleErrorResponse,
+  });
+
+  const onSubmit = (data: FormData) => {
+    mutate(data);
   };
 
   return (
@@ -65,7 +72,11 @@ const Login = () => {
               name="password"
             />
 
-            <Button type="submit" className="w-full rounded-sm">
+            <Button
+              isLoading={isPending}
+              type="submit"
+              className="w-full rounded-sm"
+            >
               Submit
             </Button>
           </form>

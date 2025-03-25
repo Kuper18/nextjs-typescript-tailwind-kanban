@@ -2,10 +2,15 @@ import { QueryClient, UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 
+import { signupSchema } from '@/schemas/auth';
 import { newBoardSchema } from '@/schemas/board';
 import { newTaskSchema } from '@/schemas/task';
 import { IBoard } from '@/services/boards/types';
-import { IColumn, IColumnBody, IColumnBodyToUpdate } from '@/services/columns/types';
+import {
+  IColumn,
+  IColumnBody,
+  IColumnBodyToUpdate,
+} from '@/services/columns/types';
 import {
   ISubtask,
   ISubtaskBody,
@@ -100,3 +105,4 @@ export type TAction = 'create' | 'update';
 
 export type TTaskFormData = z.infer<typeof newTaskSchema>;
 export type TBoardFormData = z.infer<typeof newBoardSchema>;
+export type TSignupFormData = z.infer<typeof signupSchema>;

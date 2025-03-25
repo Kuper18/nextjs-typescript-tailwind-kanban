@@ -1,10 +1,11 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 import { Button } from '@/components/atoms/button';
 import {
@@ -17,13 +18,15 @@ import {
 } from '@/components/atoms/card';
 import { Form } from '@/components/atoms/form';
 import { signupSchema } from '@/schemas/auth';
+import authApi from '@/services/auth';
+import { TSignupFormData } from '@/types';
+import { handleErrorResponse } from '@/utils';
 
 import FormInput from '../molecules/FormInput';
 
-type FormData = z.infer<typeof signupSchema>;
-
 const Signup = () => {
-  const form = useForm<FormData>({
+  const router = useRouter();
+  const form = useForm<TSignupFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
@@ -34,8 +37,14 @@ const Signup = () => {
     },
   });
 
-  const onSubmit = async (data: FormData) => {
-    console.log(data);
+  const { mutate, isPending } = useMutation({
+    mutationFn: authApi.signup,
+    onSuccess: () => router.push('/'),
+    onError: handleErrorResponse,
+  });
+
+  const onSubmit = (data: TSignupFormData) => {
+    mutate(data);
   };
 
   return (
@@ -83,7 +92,11 @@ const Signup = () => {
               name="confirmedPassword"
             />
 
-            <Button type="submit" className="w-full rounded-sm">
+            <Button
+              isLoading={isPending}
+              type="submit"
+              className="w-full rounded-sm"
+            >
               Submit
             </Button>
           </form>
