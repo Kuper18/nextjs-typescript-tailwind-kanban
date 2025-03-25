@@ -21,19 +21,24 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from '../atoms/sidebar';
+import { Skeleton } from '../atoms/skeleton';
 import ToggleThemeButton from '../molecules/ToggleThemeButton';
 
 import CreateBoardDialog from './CreateBoardDialog';
 
 const AsideMenu = () => {
   const { boardId } = useParams();
-  const { data: boards } = useBoards();
+  const { data: boards, isFetching } = useBoards();
   const { isOpen, toggleOpen } = useOpenModal();
 
   return (
     <Sidebar className="pt-16 sm:pt-[81px] lg:pt-24">
       <SidebarHeader className="mb-[19px] ml-6 mt-[15px] lg:ml-8">
-        {`ALL BOARDS (${boards?.length})`}
+        {isFetching ? (
+          <Skeleton className="h-4 w-32" />
+        ) : (
+          `ALL BOARDS (${boards?.length})`
+        )}
       </SidebarHeader>
 
       <SidebarContent>
@@ -41,23 +46,29 @@ const AsideMenu = () => {
           <SidebarGroup className="w-[240px] p-0 lg:w-[276px]">
             <SidebarGroupContent>
               <SidebarMenu>
-                {boards?.map((board) => (
-                  <Link key={board.id} href={`/${board.id}`}>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton
-                        variant={
-                          boardId === `${board.id}` ? 'active' : 'default'
-                        }
-                        asChild
-                      >
-                        <span>
-                          <BoardIcon className="group/menu-item-hover:stroke-white transition-colors" />
-                          <span>{board.name}</span>
-                        </span>
-                      </SidebarMenuButton>
+                {isFetching
+                  ? [1, 2, 3, 4].map((item) => (
+                    <SidebarMenuItem key={item}>
+                      <Skeleton className="h-5 ml-8 my-4 w-44" />
                     </SidebarMenuItem>
-                  </Link>
-                ))}
+                  ))
+                  : boards?.map((board) => (
+                    <Link key={board.id} href={`/${board.id}`}>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton
+                          variant={
+                              boardId === `${board.id}` ? 'active' : 'default'
+                            }
+                          asChild
+                        >
+                          <span>
+                            <BoardIcon className="group/menu-item-hover:stroke-white transition-colors" />
+                            <span>{board.name}</span>
+                          </span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </Link>
+                  ))}
 
                 <SidebarMenuItem>
                   <CreateBoardDialog

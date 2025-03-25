@@ -8,13 +8,14 @@ import { cn } from '@/lib/utils';
 
 import Logo from '../atoms/icons/Logo';
 import { useSidebar } from '../atoms/sidebar';
+import { Skeleton } from '../atoms/skeleton';
 
 import BoardActions from './BoardActions';
 import MobileMenu from './MobileMenu';
 
 const Header = () => {
   const { open } = useSidebar();
-  const { data: boards } = useBoards();
+  const { data: boards, isFetching } = useBoards();
   const { boardId } = useParams<{ boardId: string }>();
 
   const board = boards?.find((board) => board.id === Number(boardId));
@@ -41,9 +42,13 @@ const Header = () => {
       </div>
 
       <div className="-ml-[1px] flex h-full w-full items-center justify-between pl-[16px] pr-[16px] sm:border-b-[1px] sm:border-l-[1px] sm:pl-6 sm:pr-6 lg:pr-8">
-        <h2 className="hidden w-fit text-lg font-bold sm:inline-flex sm:text-xl lg:text-heading-xl">
-          {board?.name ?? 'kanban'}
-        </h2>
+        {isFetching ? (
+          <Skeleton className="hidden h-8 w-[200px] sm:block" />
+        ) : (
+          <h2 className="hidden w-fit text-lg font-bold sm:inline-flex sm:text-xl lg:text-heading-xl">
+            {board?.name ?? 'kanban'}
+          </h2>
+        )}
 
         <MobileMenu />
 

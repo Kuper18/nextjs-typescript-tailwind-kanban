@@ -72,6 +72,10 @@ export default {
         },
         shadow: 'hsl(var(--shadow))',
         'linear-gradient-start': 'hsl(var(--linear-gradient-start))',
+        skeleton: {
+          1: 'hsl(var(--skeleton-1))',
+          2: 'hsl(var(--skeleton-2))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -88,6 +92,15 @@ export default {
       },
       boxShadow: {
         custom: '0px 4px 6px 0px hsla(var(--shadow))',
+      },
+      animation: {
+        shimmer: 'shimmer 1.5s infinite linear',
+      },
+      keyframes: {
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
       },
     },
   },

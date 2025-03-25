@@ -65,6 +65,9 @@ body {
     --shadow: 220, 40%, 35%, 0.1;
 
     --linear-gradient-start: 219, 63%, 95%, 1;
+
+    --skeleton-1: 223, 91%, 95%;
+    --skeleton-2: 216, 100%, 96%;
   }
   .dark {
     --background: 235, 12%, 19%, 1;
@@ -122,6 +125,9 @@ body {
     --shadow: 220, 40%, 35%, 0.1;
 
     --linear-gradient-start: 235, 12%, 19%, 0.5;
+
+    --skeleton-1: 236, 11%, 27%;
+    --skeleton-2: 237, 11%, 32%;
   }
 }
 
